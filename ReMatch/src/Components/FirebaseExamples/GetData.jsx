@@ -1,5 +1,5 @@
 import { collection, getDocs, getDoc, doc } from "firebase/firestore"
-import { db } from "../../firebase/config"
+import { db } from "../../firebase"
 
 
 const GetData = () => {

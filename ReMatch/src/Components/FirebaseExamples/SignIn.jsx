@@ -1,10 +1,10 @@
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
+import { auth } from "../../firebase"
 
 const SignIn = () => {
 
   const authenticate = () => {
 
-    const auth = getAuth()
     signInWithEmailAndPassword(auth, 'johnsmith@gmail.com', 'password')
     .then(userCredential => {
 
