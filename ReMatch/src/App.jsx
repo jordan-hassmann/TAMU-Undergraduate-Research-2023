@@ -1,7 +1,7 @@
 import GetData from './Components/FirebaseExamples/GetData'
-
-import './App.css'
 import SignIn from './Components/FirebaseExamples/SignIn'
+
+import './App.scss'
 
 function App() {
 
