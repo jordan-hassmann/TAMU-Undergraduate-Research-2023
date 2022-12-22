@@ -46,7 +46,11 @@ function App() {
 
 
         {/* -=-=- Primary Routes -=-=- */}
-        <Route element={ <ContentWrapper /> }>
+        <Route element={ 
+          <ProtectedRoute user={ user }>
+            <ContentWrapper />
+          </ProtectedRoute>
+        }>
           <Route index element={ 
             <ProtectedRoute user={ user }>
               <HomePage />

@@ -41,6 +41,7 @@ const LoginPage = () => {
           <form>
             <Space direction='vertical'>
               <Input
+                className='email-field'
                 size='large'
                 placeholder="Email address"
               />
