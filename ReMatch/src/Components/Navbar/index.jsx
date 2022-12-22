@@ -1,5 +1,5 @@
 //React 
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
 // antd
@@ -34,7 +34,7 @@ const links = [
 ]
 
 const Navbar = () => {
-  
+  const navigate = useNavigate()
   const [active, setActive] = useState(-1)
 
 
@@ -49,7 +49,7 @@ const Navbar = () => {
   return (
     <div className="navbar">
       <Space className='logo' size='middle'>
-        <h1>ReMatch</h1>
+        <h1 onClick={ () => navigate('/login') }>ReMatch</h1>
         <FontAwesomeIcon icon='hippo' size='2x' />
       </Space>
 
