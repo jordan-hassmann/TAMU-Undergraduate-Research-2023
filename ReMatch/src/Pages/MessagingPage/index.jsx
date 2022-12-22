@@ -2,7 +2,7 @@
 
 
 // Styles
-import './styles'
+import './styles.scss'
 
 
 const MessagingPage = () => {

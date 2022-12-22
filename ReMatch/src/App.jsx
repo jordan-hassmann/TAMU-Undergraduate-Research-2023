@@ -8,6 +8,8 @@ import HomePage from './Pages/HomePage'
 import PageNotFound from './Components/PageNotFound'
 import Error404 from './Pages/404'
 import ApplicationsPage from './Pages/ApplicationsPage'
+import MessagingPage from './Pages/MessagingPage'
+import ProfilePage from './Pages/ProfilePage'
 import { ProtectedRoute } from './Components/ProtectedRoute'
 
 // Styles
@@ -57,9 +59,21 @@ function App() {
             </ProtectedRoute>
           } />
 
+          <Route path='/messaging' element={
+            <ProtectedRoute user={ user }>
+              <MessagingPage />
+            </ProtectedRoute>
+          } />
+
           <Route path='/applications' element={
             <ProtectedRoute user={ user }>
               <ApplicationsPage />
+            </ProtectedRoute>
+          } />
+
+          <Route path='/profile' element={
+            <ProtectedRoute user={ user }>
+              <ProfilePage />
             </ProtectedRoute>
           } />
 
