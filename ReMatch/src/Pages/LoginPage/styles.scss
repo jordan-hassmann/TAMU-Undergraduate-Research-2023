@@ -1,5 +1,6 @@
 
 
+
 .login-page {
   width: 100%;
   height: 100vh;
@@ -10,70 +11,77 @@
 
   display: grid;
   place-items: center;
-}
 
-.logo {
-  position: absolute;
-  top: 40px;
-  left: 40px;
-  color: #93A4FF;
 
-  h1 {
-    font-family: 'Patua One', cursive;
-    font-size: 50px;
-    font-weight: 100;
+
+
+
+
+
+  .logo {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    color: #93A4FF;
+  
+    h1 {
+      font-family: 'Patua One', cursive;
+      font-size: 50px;
+      font-weight: 100;
+    }
   }
-}
-
-.form {
-  min-width: fit-content;
-  max-width: 400px;
-  width: 100%;
-
-  & .ant-space {
+  
+  .form {
+    min-width: fit-content;
+    max-width: 400px;
     width: 100%;
-  }
-
-  h2 {
-    font-size: 40px;
-    color: #FFFFFF;
-  }
-
-  input,
-  .ant-input-password {
-    background-color: rgba(0, 0, 0, 0.5);
-    border: none;
-    color: #FFFFFF;
-    padding: 14px 18px;
-    
-  }
-
-  input::placeholder {
-    color: #626262;
-  } 
-
-  .login-button {
-    padding: 12px 60px;
-    text-transform: uppercase;
-    background-color: #5b70e7;
-    color: #FFFFFF;
-    font-weight: 700;
-    font-size: 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-
-    &:hover {
-      background-color: #4858b4;
+  
+    & .ant-space {
+      width: 100%;
     }
-
-    &:active {
-      background-color: #3a4696;
-      transition: background-color 0s ease;
+  
+    h2 {
+      font-size: 40px;
+      color: #FFFFFF;
     }
-  }
-
-  svg {
-    fill: #FFFFFF;
+  
+    input,
+    .ant-input-password {
+      background-color: #000d16;
+      border: none;
+      color: #FFFFFF;
+      padding: 14px 18px;
+      
+    }
+  
+    input::placeholder {
+      color: #626262;
+    } 
+  
+    .login-button {
+      padding: 12px 60px;
+      text-transform: uppercase;
+      background-color: #5b70e7;
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+  
+      &:hover {
+        background-color: #4858b4;
+      }
+  
+      &:active {
+        background-color: #3a4696;
+        transition: background-color 0s ease;
+      }
+    }
+  
+    svg {
+      fill: #FFFFFF;
+    }
   }
 }
+

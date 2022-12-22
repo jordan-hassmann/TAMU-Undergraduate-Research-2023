@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom'
 import { Input, Space } from 'antd'
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHippo } from '@fortawesome/free-solid-svg-icons'
 
 // Styles
 import './styles.scss'
@@ -29,7 +28,7 @@ const LoginPage = () => {
       <div className="logo">
         <Space size='middle'>
           <h1>ReMatch</h1>
-          <FontAwesomeIcon icon={ faHippo } size='3x' />
+          <FontAwesomeIcon icon='hippo' size='3x' />
         </Space>
       </div>  
       

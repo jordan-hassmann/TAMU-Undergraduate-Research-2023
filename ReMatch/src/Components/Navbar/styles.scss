@@ -1,0 +1,36 @@
+
+
+
+.navbar {
+  background-color: #1E3F58;
+  padding: 15px 40px 15px 30px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+
+
+
+  .logo {
+    color: #93A4FF;
+
+    h1 {
+      font: 100 35px 'Patua One', cursive;
+    }
+  }
+
+
+  nav a {
+    text-transform: uppercase;
+    color: #FFFFFF;
+    font-weight: 500;
+    padding: 12px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+
+    &.active {
+      background-color: #64c6ff1f;
+    }
+  }
+}

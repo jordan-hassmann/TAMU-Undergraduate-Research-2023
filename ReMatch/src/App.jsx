@@ -14,6 +14,10 @@ import { ProtectedRoute } from './Components/ProtectedRoute'
 import './App.scss'
 
 
+// Iconography
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faHippo } from '@fortawesome/free-solid-svg-icons'
+library.add(faHippo)
 
 
 
