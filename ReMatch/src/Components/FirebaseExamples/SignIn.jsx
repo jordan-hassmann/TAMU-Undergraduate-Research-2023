@@ -1,4 +1,4 @@
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
+import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth"
 import { auth } from "../../firebase"
 
 const SignIn = () => {
@@ -18,8 +18,14 @@ const SignIn = () => {
 
   }
 
+  const signout = () => {
+    signOut(auth)
+    .then(() => console.log("Successful signout"))
+    .catch(err => console.log(err))
+  }
+
   return (
-    <button className="sign-in" onClick={ authenticate }>Sign In!</button>
+    <button className="sign-in" onClick={ signout }>Sign In!</button>
   )
 }
 

@@ -1,16 +1,73 @@
-import GetData from './Components/FirebaseExamples/GetData'
-import SignIn from './Components/FirebaseExamples/SignIn'
+import { Route, Routes, Navigate, Outlet } from 'react-router-dom'
 
+// Pages
+import LoginPage from './Pages/LoginPage'
+import LoadingPage from './Pages/LoadingPage'
+import Navbar from './Components/Navbar'
+import HomePage from './Pages/HomePage'
+import PageNotFound from './Components/PageNotFound'
+import Error404 from './Pages/404'
+import ApplicationsPage from './Pages/ApplicationsPage'
+import { ProtectedRoute } from './Components/ProtectedRoute'
+
+// Styles
 import './App.scss'
+
+
+
+
+
+
+const ContentWrapper = () => {
+  return (
+    <>
+      <Navbar />
+      <Outlet />
+    </>
+  )
+}
+
 
 function App() {
 
+  let user = true
+
   return (
-    <div className="App">
-      <GetData />
-      <SignIn />
-    </div>
+    <>
+      <Routes>
+
+        {/* -=-=- Login -=-=- */}
+        <Route path='/login' element={ <LoginPage /> } />
+
+
+
+        {/* -=-=- Primary Routes -=-=- */}
+        <Route element={ <ContentWrapper /> }>
+          <Route index element={ 
+            <ProtectedRoute user={ user }>
+              <HomePage />
+            </ProtectedRoute>
+          } />
+
+          <Route path='/applications' element={
+            <ProtectedRoute user={ user }>
+              <ApplicationsPage />
+            </ProtectedRoute>
+          } />
+
+          <Route path='/loading' element={ <LoadingPage /> } />
+
+
+
+          {/* -=-=- Default Route -=-=- */}
+          <Route path='/404' element={ <Error404 /> } />
+          <Route path='*' element={ <PageNotFound /> } />
+        </Route>
+
+      </Routes>
+    </>
   )
+  
 }
 
 export default App

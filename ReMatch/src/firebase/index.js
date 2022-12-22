@@ -28,4 +28,14 @@ const analytics = getAnalytics(app);
 
 const db = getFirestore(app)
 const auth = getAuth(app)
-export { db, auth }
+
+// Signed In User Observer
+let user = null
+let loggedIn = false
+auth.onAuthStateChanged(user => {
+  user = user 
+  loggedIn = Boolean(user)
+})
+
+
+export { db, auth, user, loggedIn }
