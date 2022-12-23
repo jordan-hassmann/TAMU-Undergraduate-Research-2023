@@ -26,7 +26,10 @@ import {
   faPaperPlane,
   faPaperclip,
   faCircle,
-  faChevronRight 
+  faChevronRight,
+  faMessage,
+  faFileSignature,
+  faStar 
 } from '@fortawesome/free-solid-svg-icons'
 library.add(
   faHippo, 
@@ -36,7 +39,10 @@ library.add(
   faPaperPlane,
   faPaperclip,
   faCircle,
-  faChevronRight
+  faChevronRight,
+  faMessage,
+  faFileSignature,
+  faStar
 )
 
 

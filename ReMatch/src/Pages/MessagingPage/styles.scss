@@ -52,7 +52,7 @@
       background-color: #FFFFFF;
       border-radius: 10px;
       height: 100%;
-      box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+      filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
       position: relative;
 
       display: grid;
@@ -187,10 +187,12 @@
 
         .option:nth-child(1):active {
           background-color: #147bc0;
+          transition: background-color 0s ease;
         }
 
         .option:nth-child(2):active {
           background-color: #2d9e2b;
+          transition: background-color 0s ease;
         }
       }
 

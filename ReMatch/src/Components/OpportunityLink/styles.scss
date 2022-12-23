@@ -1,0 +1,54 @@
+
+
+.opportunity-link {
+  display: grid;
+  grid-template-areas: 'content arrow';
+  grid-template-columns: auto 40px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(145, 211, 255, 0.1);
+    border: 2px solid rgb(198, 232, 255);
+    transition: background-color 0.2s ease, border 0.2s ease;
+  }
+
+  .content {
+    grid-area: content;
+    display: grid; 
+    row-gap: 12px;
+    padding: 12px 0px 12px 24px;
+    
+    h3 {
+      font-size: 23px;
+      font-weight: 600;
+    }
+
+    .description {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 22px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      font-weight: 600;
+      color: #afafaf;
+    }
+
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 10px 0;
+    }
+  }
+
+
+  .arrow {
+    grid-area: arrow;
+    display: grid;
+    place-items: center;
+  }
+}

@@ -1,0 +1,23 @@
+
+
+.skill {
+  width: fit-content;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  line-height: unset !important;
+  height: min-content;
+
+
+  &.primary {
+    background-color: #B0E2FE;
+    color: #229bff;
+  }
+
+  &.secondary {
+    background-color: #D2B0FE;
+    color: #7000FF;
+  }
+}
+
