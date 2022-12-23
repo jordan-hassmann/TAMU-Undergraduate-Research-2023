@@ -18,8 +18,26 @@ import './App.scss'
 
 // Iconography
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faHippo } from '@fortawesome/free-solid-svg-icons'
-library.add(faHippo)
+import { 
+  faHippo, 
+  faCircleUser, 
+  faMagnifyingGlass, 
+  faEllipsisVertical,
+  faPaperPlane,
+  faPaperclip,
+  faCircle,
+  faChevronRight 
+} from '@fortawesome/free-solid-svg-icons'
+library.add(
+  faHippo, 
+  faCircleUser, 
+  faMagnifyingGlass, 
+  faEllipsisVertical,
+  faPaperPlane,
+  faPaperclip,
+  faCircle,
+  faChevronRight
+)
 
 
 

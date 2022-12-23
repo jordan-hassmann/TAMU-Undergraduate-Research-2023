@@ -1,0 +1,42 @@
+
+
+.message {
+  display: grid; 
+  grid-template-columns: 50px auto;
+
+  
+
+
+  .profile-image {
+    padding-top: 5px;
+  }
+
+  .content {
+
+    .title {
+      display: flex;
+      justify-content: start;
+      align-items: end;
+      gap: 20px;
+      margin-bottom: 5px;
+
+      h4 {
+        font-size: 16px;
+        font-weight: 700;
+      }
+
+      span {
+        color: #b1b1b1;
+        font-size: 12px;
+        font-weight: 500;
+        padding-bottom: 2px;
+      }
+
+    }
+
+    p {
+      font-weight: 500;
+      font-size: 14px;
+    }
+  }
+}

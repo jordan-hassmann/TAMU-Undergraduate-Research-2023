@@ -1,8 +1,200 @@
 
 
 .messaging-page {
+  display: grid;
+  grid-template-areas: 'drawer chat';
+  grid-template-rows: calc(100vh - 65px);
+  grid-template-columns: minmax(300px, 25%) auto;
+
+  .message-drawer {
+    grid-area: drawer;
+    border-right: 1px solid #B9B9B9;
+
+    .search {
+      padding: 10px;
+      background-color: #FFFFFF;
+    }
+
+    .messages {
+      display: grid;
+      align-content: start;
+      gap: 10px;
+      height: calc(100% - 52px);
+      overflow-y: scroll;
+
+      &::-webkit-scrollbar {
+        width: 6px;
+        transition: 0.2s ease;
+      }
+      
+      &::-webkit-scrollbar-thumb {
+        background: rgb(196, 196, 196);
+        border-radius: 50px;
+      }
+
+      &::-webkit-scrollbar-thumb:hover {
+        background: #555;
+      }
+    }
+
+  }
 
 
 
+
+  .chat {
+    grid-area: chat;
+    background-color: #F2F2F2;
+    padding: 15px;
+
+
+    .card {
+      background-color: #FFFFFF;
+      border-radius: 10px;
+      height: 100%;
+      box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+      position: relative;
+
+      display: grid;
+      grid-template-areas: 
+      'header'
+      'messages'
+      'input'
+      'options'
+      'spacer';
+      grid-template-rows: 60px auto 95px 40px 20px;
+
+
+      
+
+      .header {
+        grid-area: header;
+        height: 60px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        background-color: #4a5ed3;
+        padding: 0 20px 0 30px;
+        border-radius: 10px 10px 0 0;
+        color: #FFFFFF;
+
+        .options {
+          display: flex;
+          gap: 10px;
+        }
+
+        .option {
+          display: grid;
+          place-items: center;
+          border-radius: 100%;
+          cursor: pointer;
+          background-color: transparent;
+          border: none;
+          color: #FFFFFF;
+          transition: background-color 0.1s ease;
+        }
+
+        .option:hover {
+          background-color: rgba(117, 138, 255, 0.5);
+        }
+
+      }
+
+
+      .messages {
+        grid-area: messages;
+        overflow-y: auto;
+        display: grid;
+        align-content: start;
+        gap: 20px;
+        padding: 20px 40px 0 40px;
+
+        &::-webkit-scrollbar {
+          width: 6px;
+          transition: 0.2s ease;
+        }
+        
+        &::-webkit-scrollbar-thumb {
+          background: rgb(196, 196, 196);
+          border-radius: 50px;
+        }
   
+        &::-webkit-scrollbar-thumb:hover {
+          background: #555;
+        }
+      }
+      
+
+          
+      .input-container {
+        grid-area: input;
+        padding: 0 30px;
+
+        textarea {
+          border: 1px solid #B9B9B9;
+          border-radius: 8px;
+          background-color: #FFFFFF;
+          width: calc(100% - 40px);
+          resize: none;
+          padding: 15px;
+        }
+        
+      }
+
+      
+
+      .message-options {
+        grid-area: options;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 30px;
+
+        .option {
+          height: fit-content;
+          width: fit-content;
+          padding: 12px 20px;
+          color: #FFFFFF;
+          text-transform: uppercase;
+          font-weight: 700;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+
+          display: flex;
+          gap: 10px
+        }
+
+        .option {
+          transition: background-color 0.15s ease;
+        }
+
+        .option:nth-child(1) {
+          background-color: #18A0FB;
+        }
+
+        .option:nth-child(2) {
+          background-color: #3ACC37;
+        }
+
+        .option:nth-child(1):hover {
+          background-color: #168bda;
+        }
+
+        .option:nth-child(2):hover {
+          background-color: #30b12e;
+        }
+
+        .option:nth-child(1):active {
+          background-color: #147bc0;
+        }
+
+        .option:nth-child(2):active {
+          background-color: #2d9e2b;
+        }
+      }
+
+
+    }
+  }
 }

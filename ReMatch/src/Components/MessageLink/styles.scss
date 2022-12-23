@@ -1,0 +1,49 @@
+
+
+.message-link {
+  display: grid;
+  grid-template-areas: 'img content symbol';
+  grid-template-columns: 20% 65% 15%;
+  grid-template-rows: 60px;
+  align-items: center;
+  cursor: pointer;
+
+
+  &:hover {
+    background-color: rgba(160, 244, 255, 0.36);
+    transition: background-color 0.2s ease;
+  }
+
+  .profile-image {
+    grid-area: img;
+
+    display: grid;
+    place-items: center;
+  }
+
+  .content {
+    grid-area: content;
+
+    h4 {
+      font-size: 17px;
+      font-weight: 700px;
+      margin-bottom: 5px;
+    }
+
+    p {
+      font-size: 14px;
+      line-clamp: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: #7D7D7D;
+      font-weight: 500;
+    }
+  }
+
+  .symbol {
+    grid-area: symbol;
+    display: grid;
+    place-items: center;
+  }
+}
