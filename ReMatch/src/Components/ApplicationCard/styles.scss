@@ -1,0 +1,142 @@
+
+
+.application-card {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 10fr 1fr 8fr 1fr;
+  grid-template-areas: 'info x status y';
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  position: relative;
+  cursor: pointer;
+  text-align: start;
+  border: none;
+  filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.2));
+  transition: translate 0.2s ease;
+
+  &:hover {
+    translate: 0px -2px;
+  }
+
+  .info {
+    grid-area: info;
+    background-color: #2B3B93;
+    border-radius: 10px 0 0 10px;
+    padding: 20px 25px;
+    color: #FFFFFF;
+
+    display: grid;
+    row-gap: 18px;
+
+    h5 {
+      color: #5570FA;
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: -5px;
+    }
+
+    h3 {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .faculty {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      svg {
+        color: #5570FA;
+      }
+
+      .subtitle {
+        font-size: 14px;
+        font-weight: 700;
+      }
+    }
+
+    button {
+      background-color: #4056C8;
+      color: #FFFFFF;
+      border: none;
+      width: fit-content;
+      height: fit-content;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 4px;
+      cursor: pointer;
+      
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      padding: 10px 14px;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: #3649aa;
+      }
+      &:active {
+        background-color: #3043a0;
+        transition: background-color 0s ease;
+      }
+    }
+  }
+
+
+  .status {
+    grid-area: status;
+    display: grid;
+    grid-template-columns: 1fr min-content;
+    align-items: center;
+    gap: 8px;
+
+
+    h5 {
+      color: #5570FA;
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    h3 {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      font-weight: 500;
+      font-size: 12px;
+      color: #7C7C7C;
+    }
+
+    .content {
+      display: grid;
+      gap: 8px
+    }
+  }
+
+
+  .remove {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    color: #7B7B7B;
+    border: none;
+    background-color: transparent;
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+    &:active {
+      background-color: rgba(0, 0, 0, 0.2);
+      transition: background-color 0s ease;
+    }
+  }
+
+}

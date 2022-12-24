@@ -29,7 +29,15 @@ import {
   faChevronRight,
   faMessage,
   faFileSignature,
-  faStar 
+  faStar, 
+  faThumbsUp,
+  faXmark,
+  faPlus,
+  faCheck,
+  faChevronUp, 
+  faTrash, 
+  faPlusMinus, 
+  faDiagramProject
 } from '@fortawesome/free-solid-svg-icons'
 library.add(
   faHippo, 
@@ -42,7 +50,15 @@ library.add(
   faChevronRight,
   faMessage,
   faFileSignature,
-  faStar
+  faStar, 
+  faThumbsUp,
+  faXmark,
+  faPlus,
+  faCheck,
+  faChevronUp, 
+  faTrash, 
+  faPlusMinus,
+  faDiagramProject
 )
 
 
