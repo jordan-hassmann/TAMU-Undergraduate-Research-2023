@@ -21,6 +21,7 @@
       align-items: center;
       gap: 15px;
 
+
       .filter-button {
         grid-area: filter;
         background-color: #0085FF;
@@ -53,6 +54,12 @@
         display: flex;
         align-items: center;
         gap: 5px;
+
+        @media (max-width: 1175px) {
+          & {
+            display: none;
+          }
+        }
       }
 
       .spacer {
@@ -68,7 +75,7 @@
 
     .applications {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
       gap: 20px;
       padding-top: 20px;
     }

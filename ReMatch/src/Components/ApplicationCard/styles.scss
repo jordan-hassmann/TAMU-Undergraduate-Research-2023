@@ -3,7 +3,7 @@
 .application-card {
   display: grid;
   align-items: center;
-  grid-template-columns: 10fr 1fr 8fr 1fr;
+  grid-template-columns: 10fr 1.5fr 7fr 1.5fr;
   grid-template-areas: 'info x status y';
   background-color: #FFFFFF;
   border-radius: 10px;
@@ -22,8 +22,9 @@
     grid-area: info;
     background-color: #2B3B93;
     border-radius: 10px 0 0 10px;
-    padding: 20px 25px;
+    padding: 25px 30px;
     color: #FFFFFF;
+    height: calc(100% - 50px);
 
     display: grid;
     row-gap: 18px;
@@ -39,6 +40,13 @@
     h3 {
       font-size: 20px;
       font-weight: 700;
+      text-overflow:ellipsis;
+      overflow:hidden;
+      // Addition lines for 2 line or multiline ellipsis
+      display: -webkit-box !important;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      white-space: normal;
     }
 
     .faculty {
@@ -89,7 +97,7 @@
     display: grid;
     grid-template-columns: 1fr min-content;
     align-items: center;
-    gap: 8px;
+    gap: 18px;
 
 
     h5 {
@@ -102,6 +110,7 @@
     h3 {
       font-size: 20px;
       font-weight: 700;
+      white-space: nowrap;
     }
 
     .subtitle {

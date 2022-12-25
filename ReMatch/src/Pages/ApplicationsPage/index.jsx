@@ -10,8 +10,19 @@ import './styles.scss'
 
 
 
-// const MenuItem = ({ label, onClick, })
-
+const applications = [
+  'Improving LIDAR in Self-Driving Cars cars cars', 
+  'Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur ducimus libero architecto eligendi, labore totam.',
+  'Improving LIDAR in ', 
+  'Improving LIDAR in Self-Driving Cars cars cars', 
+  'Improving LIDAR in Self-Driving Cars', 
+  'Improving LIDAR in Self-Driving Cars', 
+  'Improving LIDAR in Self-Driving Cars', 
+  'Improving LIDAR in Self-Driving Cars', 
+  'Improving LIDAR in Self-Driving Cars', 
+  'Improving LIDAR in Self-Driving Cars', 
+  'Improving LIDAR in Self-Driving Cars', 
+]
 
 
 const ApplicationsPage = () => {
@@ -78,7 +89,6 @@ const ApplicationsPage = () => {
             } )}
           </div>
 
-          <div className="spacer" />
 
           <Input.Search placeholder='Search' className='search' style={{ width: 300 }} />
         </div>
@@ -86,14 +96,7 @@ const ApplicationsPage = () => {
 
         <div className="applications">
 
-          <ApplicationCard />
-          <ApplicationCard />
-          <ApplicationCard />
-          <ApplicationCard />
-          <ApplicationCard />
-          <ApplicationCard />
-          <ApplicationCard />
-          <ApplicationCard />
+          { applications.map((title, i) => <ApplicationCard application={title} key={i} /> )}
           
         </div>
 

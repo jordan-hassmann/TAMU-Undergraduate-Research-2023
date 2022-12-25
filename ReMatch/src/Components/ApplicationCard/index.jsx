@@ -73,7 +73,7 @@ const ApplicationCard = ({ application }) => {
 
       <div className="info">
         <h5>Research</h5>
-        <h3>Improving LIDAR in Self-Driving Cars</h3>
+        <h3>{ application }</h3>
         <div className="faculty">
           <FontAwesomeIcon icon='diagram-project' />
           <p className="subtitle">Tracy Hammond</p>

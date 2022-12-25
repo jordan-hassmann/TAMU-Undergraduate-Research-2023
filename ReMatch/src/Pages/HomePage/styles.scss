@@ -52,17 +52,18 @@
     grid-area: chat;
     background-color: #F2F2F2;
     padding: 15px;
+    overflow: auto;
 
 
     .card {
       background-color: #FFFFFF;
       border-radius: 10px;
-      height: 100%;
+      // height: 100%;
       filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
       position: relative;
 
       display: grid;
-      grid-template-rows: min-content 1fr;
+      // grid-template-rows: min-content 1fr;
     }
 
     .header {
@@ -193,8 +194,6 @@
         }
       }
     }
-
-
       
 
       
