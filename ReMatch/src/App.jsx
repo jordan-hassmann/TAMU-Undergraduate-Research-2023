@@ -25,7 +25,6 @@ import {
   faEllipsisVertical,
   faPaperPlane,
   faPaperclip,
-  faCircle,
   faChevronRight,
   faMessage,
   faFileSignature,
@@ -37,7 +36,15 @@ import {
   faChevronUp, 
   faTrash, 
   faPlusMinus, 
-  faDiagramProject
+  faDiagramProject,
+  faArrowTurnUp,
+  faPenToSquare,
+  faChevronDown,
+  faCircleCheck,
+  faCircle,
+  faCircleXmark,
+  faDollarSign,
+  faArrowUpFromBracket,
 } from '@fortawesome/free-solid-svg-icons'
 library.add(
   faHippo, 
@@ -46,7 +53,6 @@ library.add(
   faEllipsisVertical,
   faPaperPlane,
   faPaperclip,
-  faCircle,
   faChevronRight,
   faMessage,
   faFileSignature,
@@ -58,7 +64,15 @@ library.add(
   faChevronUp, 
   faTrash, 
   faPlusMinus,
-  faDiagramProject
+  faDiagramProject,
+  faArrowTurnUp,
+  faPenToSquare,
+  faChevronDown,
+  faCircleCheck,
+  faCircle,
+  faCircleXmark,
+  faDollarSign,
+  faArrowUpFromBracket,
 )
 
 

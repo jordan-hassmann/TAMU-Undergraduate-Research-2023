@@ -1,0 +1,272 @@
+
+
+.profile-page {
+  background-color: #F2F2F2;
+  display: grid;
+  // grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  height: calc(100vh - 65px - 40px);
+  overflow: auto;
+
+  
+  .col {
+    display: grid;
+    align-content: start;
+    gap: 20px;
+  }
+
+  .subtitle-header {
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #5570FA;
+  }
+
+  .edit-fab {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    background-color: transparent;
+    top: 20px;
+    right: 20px;
+    border-radius: 100%;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    display: grid;
+    place-items: center ;
+
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+    &:active {
+      background-color: rgba(0, 0, 0, 0.1);
+      transition: background-color 0s ease;
+    }
+  }
+
+  .card {
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    padding: 40px;
+    height: fit-content;
+    position: relative;
+  }
+
+
+}
+
+.profile-page .pitch-card {
+  display: grid;
+  row-gap: 15px;
+
+  h2 {
+    font-weight: 700;
+    font-size: 40px;
+  }
+
+  .caption {
+    display: flex;
+    gap: 20px;
+    
+    font-weight: 500;
+    font-size: 18px;
+    padding: 0 0 15px 6px;
+  }
+
+  .description {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
+
+
+
+.profile-page .skills-card {
+  display: grid;
+  row-gap: 20px;
+
+  .skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-bottom: 20px;
+  }
+
+  .add-skill {
+    background: #0085FF;
+    border-radius: 4px;
+    padding: 8px 14px;
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    width: fit-content;
+    transition: background-color 0.2s ease;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    &:hover {
+      background-color: #0075e2;
+    }
+    &:active {
+      background-color: #0063c0;
+      transition: background-color 0s ease;;
+    }
+  }
+}
+
+
+.profile-page .stats-card {
+  display: grid;
+  row-gap: 30px;
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+  }
+
+  .stat-card {
+    border-radius: 6px;
+    color: #FFFFFF;
+    display: grid;
+    justify-content: center;
+    row-gap: 20px;
+    padding: 20px;
+
+
+    h3 {
+      font-weight: 700;
+      font-size: 40px;
+      line-height: 24px;
+      text-align: center;
+    }
+
+    .type {
+      font-size: 15px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+  }
+
+  // @media (min-width: ) {
+    
+  // }
+}
+
+
+.profile-page .resume-card {
+  display: grid;
+  gap: 20px 40px;
+  grid-template-areas: 
+  'title upload'
+  'file  upload';
+  grid-template-columns: 1fr min-content;
+  align-items: center;
+
+  h5 {
+    grid-area: title;
+  }
+
+  .upload {
+    grid-area: upload;
+    display: grid;
+    place-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 6px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+    &:active {
+      background-color: rgba(0, 0, 0, 0.1);
+      transition: background-color 0s ease;
+    }
+  }
+
+  .resume-name {
+    grid-area: file;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 16px;
+    padding-left: 10px;
+
+
+    svg {
+      color: #3ACC37;
+    }
+  }
+}
+
+
+
+.profile-page .preferred-card {
+  display: grid;
+  align-items: center;
+  row-gap: 30px;
+
+  p,
+  .fields > span {
+    font-weight: 700;
+    font-size: 16px;
+    height: fit-content;
+  }
+
+  .fields {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+  }
+
+
+  .content {
+    display: grid;
+    grid-template-columns: minmax(120px, 20%) 1fr;
+    gap: 25px 20px;
+    padding-left: 10px;
+  }
+
+  .radio {
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    display: flex;
+    gap: 8px;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+  }
+
+  .radio:nth-child(1).active {
+    background-color: rgba(58, 204, 55, 0.26);
+    color: #3ACC37;
+  }
+
+  .radio:nth-child(2).active {
+    background-color: rgba(255, 0, 0, 0.26);
+    color: #FF0000;
+  }
+}
