@@ -43,8 +43,12 @@ import {
   faCircleCheck,
   faCircle,
   faCircleXmark,
+  faSliders,
   faDollarSign,
   faArrowUpFromBracket,
+  faQuestionCircle,
+  faCloudDownload,
+  faLayerGroup,
 } from '@fortawesome/free-solid-svg-icons'
 library.add(
   faHippo, 
@@ -71,8 +75,12 @@ library.add(
   faCircleCheck,
   faCircle,
   faCircleXmark,
+  faSliders,
   faDollarSign,
   faArrowUpFromBracket,
+  faQuestionCircle,
+  faCloudDownload,
+  faLayerGroup,
 )
 
 

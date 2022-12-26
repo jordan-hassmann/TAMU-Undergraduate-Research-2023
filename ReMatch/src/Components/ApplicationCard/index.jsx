@@ -66,7 +66,7 @@ const CustomProgress = ({ status }) => {
 }
 
 
-const ApplicationCard = ({ application }) => {
+const ApplicationCard = ({ application, onOpen }) => {
 
   return (
     <div className="application-card">
@@ -78,7 +78,7 @@ const ApplicationCard = ({ application }) => {
           <FontAwesomeIcon icon='diagram-project' />
           <p className="subtitle">Tracy Hammond</p>
         </div>
-        <button>
+        <button onClick={ onOpen }>
           <span>View Application</span>
           <FontAwesomeIcon icon='chevron-right' />
         </button>

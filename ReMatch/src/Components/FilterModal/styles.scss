@@ -1,0 +1,130 @@
+
+
+
+
+.filter-modal-card {
+
+  display: grid;
+  row-gap: 40px;
+  
+  .col {
+    display: grid;
+    row-gap: 10px;
+  }
+
+  .col h5:not(:first-of-type) {
+    padding-top: 30px;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  
+  h3 {
+    font-size: 25px;
+    font-weight: 700px;
+    line-height: 30px;
+  }
+  
+  h5 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #5570FA;
+    line-height: 24px;
+    text-transform: uppercase;
+  }
+  
+  .help {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding-top: 30px;
+  
+    h5 {
+      padding: 0;
+    }
+  }
+  
+  
+  .content {
+    display: grid;
+    column-gap: 40px;
+    grid-template-columns: 2fr 3fr;
+
+    padding: 0 10px 0 10px;
+  }
+  
+  
+  .col:nth-child(1) .ant-checkbox-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: start;
+    gap: 15px;
+  
+    & * { 
+      margin: 0;
+    }
+  }
+  
+  .col:nth-child(2) .ant-checkbox-group {
+    display: flex;
+    gap: 20px;
+  }
+  
+  
+  
+  .options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  
+    
+    button {
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 15px;
+      padding: 10px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+  
+    .clear {
+      border: 1px solid #5570FA;
+      background-color: transparent;
+      color: #5570FA;
+      
+      &:hover {
+        background-color: rgba(85, 112, 250, 0.15);
+      }
+      &:active {
+        background-color: rgba(85, 112, 250, 0.25);
+        transition: background-color 0s ease;
+      }
+    }
+  
+    .save {
+      background-color: #5570FA;
+      color: #FFFFFF;
+      border: none;
+      
+      &:hover {
+        background-color: #4a63dd;
+      }
+      &:active {
+        background-color: #4055bd;
+        transition: background-color 0s ease;
+      }
+    }
+  
+  
+  }
+
+
+}
+
+
+

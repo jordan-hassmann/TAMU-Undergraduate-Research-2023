@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Input, Dropdown } from 'antd'
 import FilterChip from '../../Components/FilterChip'
 import ApplicationCard from '../../Components/ApplicationCard'
+import ApplicationModal from '../../Components/ApplicationModal'
 
 import './styles.scss'
 
@@ -29,6 +30,7 @@ const ApplicationsPage = () => {
 
   const [filters, setFilters] = useState([])
   const [open, setOpen] = useState(false);
+  const [modal, setModal] = useState(false);
   const [items, setItems] = useState({
     'Accepted': { 
       key: 0,
@@ -95,12 +97,13 @@ const ApplicationsPage = () => {
 
 
         <div className="applications">
-
-          { applications.map((title, i) => <ApplicationCard application={title} key={i} /> )}
-          
+          { applications.map((title, i) => <ApplicationCard onOpen={ () => setModal(true) } application={title} key={i} /> )}
         </div>
 
       </div>
+
+
+      <ApplicationModal open={ modal } onClose={ () => setModal(false) } />
     </div>
   )
 }

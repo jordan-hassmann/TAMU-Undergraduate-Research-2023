@@ -1,5 +1,5 @@
 
-
+import { useState } from 'react';
 import OpportunityLink from '../../Components/OpportunityLink';
 import Skill from '../../Components/Skill';
 
@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Styles
 import './styles.scss'
+import FilterModal from '../../Components/FilterModal';
 
 
 const { Search } = Input;
@@ -20,6 +21,8 @@ const { Search } = Input;
 const HomePage = () => {
 
   const onSearch = () => {}
+  const [openFilters, setOpenFilters] = useState(false)
+
 
   return (
     <div className="home-page">
@@ -27,6 +30,10 @@ const HomePage = () => {
       <div className="opportunity-drawer">
         <div className="search">
           <Search placeholder="Search" onSearch={onSearch} />
+          <button className="filters" onClick={ () => setOpenFilters(true) }>
+            <span>Filters</span>
+            <FontAwesomeIcon icon='sliders' />
+          </button>
         </div>
         <div className="opportunities">
           <OpportunityLink />
@@ -130,6 +137,7 @@ const HomePage = () => {
         </div>
       </div>  
 
+      <FilterModal open={ openFilters } onClose={ () => setOpenFilters(false) } />
     </div>
   )
 }

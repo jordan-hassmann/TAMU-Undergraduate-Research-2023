@@ -1,0 +1,20 @@
+
+.button-fab {
+  border-radius: 100%;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  transition: background-color 0.2s ease;
+
+  display: grid;
+  place-items: center;
+
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  &:active {
+    background-color: rgba(0, 0, 0, 0.1);
+    transition: background-color 0s ease;
+  }
+}
