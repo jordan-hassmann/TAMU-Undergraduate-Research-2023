@@ -1,4 +1,5 @@
 
+import { Spin } from 'antd'
 import './styles.scss'
 
 
@@ -6,7 +7,9 @@ const LoadingPage = () => {
 
 
   return (
-    <h2>Loading...</h2>
+    <div className="loading-page">
+      <Spin size='large' />
+    </div>
   )
 }
 

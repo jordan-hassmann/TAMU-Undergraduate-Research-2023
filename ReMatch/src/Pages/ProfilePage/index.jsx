@@ -1,11 +1,15 @@
 
-import { Dropdown, DatePicker, Input } from 'antd'
+import { DatePicker, Input, Spin } from 'antd'
 
 // Styles
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { LoadingOutlined } from '@ant-design/icons'
 import Skill from '../../Components/Skill'
-import './styles.scss'
 import { useState } from 'react'
+
+import './styles.scss'
+import { signOut } from 'firebase/auth'
+import { auth } from '../../firebase'
 
 
 const PitchCard = ({ pitch }) => {
@@ -162,6 +166,28 @@ const PreferredCard = ({  }) => {
 }
 
 
+const SignOutCard = () => {
+  const [loading, setLoading] = useState(false)
+
+  const logout = () => {
+    setLoading(true)
+    signOut(auth)
+    .then(() => setLoading(false))
+  }
+
+  return (
+    <div className="signout-card card">
+      <h5 className="subtitle-header">Signout</h5>
+      <p className="subtitle">Signout of the application and return to the login screen</p>
+      <button className="logout" onClick={ logout }>
+        <span>Sign Out</span>
+        { loading && <Spin style={{ height: '16px', marginTop: '-8px' }} size='small' indicator={ <LoadingOutlined color='#FF0000' /> } /> }
+      </button>
+    </div>
+  )
+}
+
+
 
 const ProfilePage = () => {
 
@@ -172,12 +198,15 @@ const ProfilePage = () => {
     { type: 'In Review',    count: 1 }, 
   ]
 
+  
+
   return (
     <div className="profile-page">
       
       <div className="col">
         <PitchCard />
         <ResumeCard />
+        <SignOutCard />
       </div>
       <div className="col">
         <SkillsCard />

@@ -15,6 +15,40 @@
 
 
 
+  .login-alert {
+    border-radius: 6px;
+    background-color: rgba(255, 0, 0, 0.2);
+    border: 1px solid #FF0000;
+    color: #FF0000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+
+    animation: shake 0.5s forwards;
+  }
+
+  @keyframes shake {
+    0% {
+      transform: translate(-20px)
+    }
+    20% {
+      transform: translate(15px)
+    }
+    40% {
+      transform: translate(-5px);
+    }
+    60% {
+      transform: translate(5px)
+    }
+    80% {
+      transform: translate(-2px)
+    }
+    100% {
+      transform: translate(0px)
+    }
+  }
+
 
 
 
@@ -49,6 +83,7 @@
     .ant-input-password {
       background-color: #000d16;
       border: none;
+      outline: transparent;
       color: #FFFFFF;
       padding: 14px 18px;
       
@@ -56,6 +91,11 @@
         background-color: #000d16;
         color: #FFFFFF;
       }
+    }
+
+    .email-field.error,
+    .ant-input-password.error {
+      outline: 2px solid #a70000;
     }
   
     input::placeholder {
@@ -70,8 +110,13 @@
       font-weight: 700;
       font-size: 16px;
       border-radius: 6px;
+      line-height: 24px;
       cursor: pointer;
       transition: background-color 0.2s ease;
+
+      display: flex;
+      gap: 15px;
+      align-items: center;
   
       &:hover {
         background-color: #4858b4;

@@ -30,7 +30,7 @@ const OpportunityLink = ({ opportunity }) => {
           <Skill />
           <Skill />
         </div>
-        <p className="subtitle">Posted 3 weeks ago</p>
+        <p className="date">Posted 3 weeks ago</p>
 
       </div>
 

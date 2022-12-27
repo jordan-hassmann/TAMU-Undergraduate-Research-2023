@@ -85,16 +85,14 @@
     .card {
       background-color: #FFFFFF;
       border-radius: 10px;
-      // height: 100%;
       filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
       position: relative;
 
       display: grid;
-      // grid-template-rows: min-content 1fr;
     }
 
     .header {
-      background-color: #4a5ed3;
+      background-color: #2B3B93;
       padding: 25px;
       border-radius: 10px 10px 0 0;
       color: #FFFFFF;

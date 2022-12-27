@@ -159,9 +159,6 @@
     }
   }
 
-  // @media (min-width: ) {
-    
-  // }
 }
 
 
@@ -268,5 +265,45 @@
   .radio:nth-child(2).active {
     background-color: rgba(255, 0, 0, 0.26);
     color: #FF0000;
+  }
+}
+
+.profile-page .signout-card {
+  display: grid;
+  row-gap: 20px;
+
+  .subtitle {
+    font-size: 14px;
+    font-weight: 500;
+    color: #888888;
+  }
+
+  .logout {
+    border: 1px solid #FF0000;
+    background-color: transparent;
+    padding: 8px;
+    border-radius: 6px;
+    color: #FF0000;
+    font-weight: 700;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    
+    svg {
+      color: #FF0000;
+    }
+
+    &:hover {
+      background-color: rgba(255, 0, 0, 0.1);
+    }
+    &:active {
+      background-color: rgba(255, 0, 0, 0.4);
+      transition: background-color 0s ease;
+    }
   }
 }

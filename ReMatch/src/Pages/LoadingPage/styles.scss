@@ -1,0 +1,11 @@
+
+
+.loading-page {
+  height: 100vh;
+  display: grid;
+  place-items: center;
+
+  & > * {
+    transform: scale(2)
+  }
+}

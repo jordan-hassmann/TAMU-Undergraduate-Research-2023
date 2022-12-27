@@ -1,4 +1,5 @@
-import { Route, Routes, Navigate, Outlet } from 'react-router-dom'
+import { Route, Routes, Outlet, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
 // Pages
 import LoginPage from './Pages/LoginPage'
@@ -11,6 +12,10 @@ import ApplicationsPage from './Pages/ApplicationsPage'
 import MessagingPage from './Pages/MessagingPage'
 import ProfilePage from './Pages/ProfilePage'
 import { ProtectedRoute } from './Components/ProtectedRoute'
+
+import { signInWithEmailAndPassword, signOut } from 'firebase/auth'
+import { auth } from './firebase'
+import { useAuthState } from 'react-firebase-hooks/auth'
 
 // Styles
 import './App.scss'
@@ -86,6 +91,11 @@ library.add(
 
 
 
+
+
+
+
+
 const ContentWrapper = () => {
   return (
     <>
@@ -97,8 +107,16 @@ const ContentWrapper = () => {
 
 
 function App() {
-
-  let user = true
+  const navigate = useNavigate()
+  const [user, loading, error] = useAuthState(auth)
+  
+  useEffect(() => {
+    if (loading) navigate('/loading')
+    if (!loading && user) navigate('/')
+    if (!loading && !user) navigate('/login')
+    if (error) console.error(error)
+  }, [user, loading])
+  
 
   return (
     <>
@@ -106,7 +124,7 @@ function App() {
 
         {/* -=-=- Login -=-=- */}
         <Route path='/login' element={ <LoginPage /> } />
-
+        <Route path='/loading' element={ <LoadingPage /> } />
 
 
         {/* -=-=- Primary Routes -=-=- */}
@@ -139,8 +157,7 @@ function App() {
             </ProtectedRoute>
           } />
 
-          <Route path='/loading' element={ <LoadingPage /> } />
-
+          
 
 
           {/* -=-=- Default Route -=-=- */}
