@@ -226,3 +226,61 @@
 
   }
 }
+
+
+
+
+.popover-card {
+  width: min(100vw, 400px);
+  height: 200px;
+
+  display: grid;
+  grid-template-rows: auto min-content;
+  grid-template-columns: 1fr;
+  row-gap: 10px;
+  justify-content: center;
+
+  textarea {
+    border: 1px solid #B9B9B9;
+    border-radius: 5px;
+    background-color: #FFFFFF;
+    resize: none;
+    padding: 10px;
+  }
+
+  .options {
+    display: flex;
+    justify-content: end;
+  }
+
+  .option {
+    height: fit-content;
+    width: fit-content;
+    padding: 8px 16px;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+
+    display: flex;
+    gap: 10px
+  }
+
+
+  .option {
+    background-color: #3ACC37;
+  }
+
+  .option:hover {
+    background-color: #30b12e;
+  }
+
+  .option:active {
+    background-color: #2d9e2b;
+    transition: background-color 0s ease;
+  }
+}

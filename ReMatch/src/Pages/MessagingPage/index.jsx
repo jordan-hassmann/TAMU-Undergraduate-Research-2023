@@ -1,4 +1,7 @@
+// React
+import { useEffect } from 'react';
 
+// Components
 import MessageLink from '../../Components/MessageLink';
 import Message from '../../Components/Message'
 
@@ -8,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Styles
 import './styles.scss'
+import { useSelector } from 'react-redux';
 
 
 const { Search } = Input;
@@ -19,6 +23,7 @@ const { Search } = Input;
 
 const MessagingPage = () => {
 
+  const messages = useSelector(state => state.messages.values)
   const onSearch = () => {}
 
   return (
@@ -63,14 +68,15 @@ const MessagingPage = () => {
 
 
           <div className="messages">
+            {/* <Message />
             <Message />
             <Message />
             <Message />
             <Message />
             <Message />
             <Message />
-            <Message />
-            <Message />
+            <Message /> */}
+            { messages.map(message => <Message key={ message.id } message={ message } />) }
           </div>
 
 

@@ -5,10 +5,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './styles.scss'
 
 
-const OpportunityLink = ({ opportunity }) => {
+const OpportunityLink = ({ opportunity, onClick }) => {
   
   return (
-    <div className="opportunity-link">
+    <div className="opportunity-link" onClick={ onClick }>
 
 
 

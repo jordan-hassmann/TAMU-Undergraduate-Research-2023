@@ -4,7 +4,7 @@ import './styles.scss'
 
 
 const Skill = ({ skill }) => {
-  return <p className="skill primary">Python</p>
+  return <p className="skill primary">{ skill }</p>
 }
 
 

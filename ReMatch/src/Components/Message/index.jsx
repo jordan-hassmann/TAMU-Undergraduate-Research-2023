@@ -4,6 +4,7 @@ import './styles.scss'
 
 
 const Message = ({ message }) => {
+  
   return (
     <div className="message">
 
@@ -13,10 +14,10 @@ const Message = ({ message }) => {
 
       <div className="content">
         <div className="title">
-          <h4>Tracy Hammond</h4>
-          <span>Feb 4th @ 1:46 pm</span>
+          <h4>{ message.sender }</h4>
+          <span>{ message.timestamp }</span>
         </div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+        <p>{ message.message }</p>
       </div>
 
     </div>
@@ -24,3 +25,7 @@ const Message = ({ message }) => {
 }
 
 export default Message
+
+
+
+{/* <span>Feb 4th @ 1:46 pm</span> */}
