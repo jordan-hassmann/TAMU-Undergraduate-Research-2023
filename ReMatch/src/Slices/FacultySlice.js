@@ -11,9 +11,12 @@ export const facultySlice = createSlice({
     addFaculty: (state, action) => {
       state.values = {...state.values, ...action.payload}
     },
+    clearFaculty: state => {
+      state.values = {}
+    }
   }
 })
 
 
-export const { addFaculty } = facultySlice.actions
+export const { addFaculty, clearFaculty } = facultySlice.actions
 export default facultySlice.reducer

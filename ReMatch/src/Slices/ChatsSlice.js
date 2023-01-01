@@ -11,9 +11,12 @@ export const chatsSlice = createSlice({
     addChats: (state, action) => {
       state.values = [...state.values, ...action.payload]
     },
+    clearChats: state => {
+      state.values = []
+    }
   }
 })
 
 
-export const { addChats } = chatsSlice.actions
+export const { addChats, clearChats } = chatsSlice.actions
 export default chatsSlice.reducer

@@ -11,9 +11,12 @@ export const applicationsSlice = createSlice({
     addApplications: (state, action) => {
       state.values = [...state.values, ...action.payload]
     },
+    clearApplications: state => {
+      state.values = []
+    }
   }
 })
 
 
-export const { addApplications } = applicationsSlice.actions
+export const { addApplications, clearApplications } = applicationsSlice.actions
 export default applicationsSlice.reducer

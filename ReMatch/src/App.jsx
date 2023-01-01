@@ -1,6 +1,6 @@
 import { Route, Routes, Outlet, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 
 // Pages
@@ -114,9 +114,16 @@ const separate = changes => {
 
 const ContentWrapper = ({ user }) => {
   const dispatch = useDispatch()
+  const messagesLoaded      = useSelector(state => state.messages.values.length > 0)
+  const chatsLoaded         = useSelector(state => state.chats.values.length > 0)
+  const applicationsLoaded  = useSelector(state => state.applications.values.length > 0)
+  const projectsLoaded      = useSelector(state => state.projects.values.length > 0)
+  const studentLoaded       = useSelector(state => state.student.student.id)
 
 
   useEffect(() => {
+    const unsubFunctions = []
+    
     async function init(user) {
 
 
@@ -186,33 +193,23 @@ const ContentWrapper = ({ user }) => {
       })
 
 
-      return () => {
-        [
-          unsubStudent,
-          unsubMessages,
-          unsubChats, 
-          unsubApplications,
-          unsubProjects
-        ].forEach(unsub => unsub())
-      }
-
-
+      // Add the unsubscribe functions 
+      unsubFunctions.push(unsubMessages, unsubChats, unsubApplications, unsubProjects)
     }
 
 
-
-
-    const cleanup = init(user)
+    init(user)
 
 
     return () => {
-      cleanup()
+      unsubFunctions.forEach(unsub => unsub())
     }
   }, [])
 
 
   return (
     <>
+      {/* { messagesLoaded && chatsLoaded && applicationsLoaded && projectsLoaded && studentLoaded && <Navbar />} */}
       <Navbar />
       <Outlet />
     </>
@@ -224,11 +221,12 @@ function App() {
   const navigate = useNavigate()
   const [user, loading, error] = useAuthState(auth)
   
+  
   useEffect(() => {
+    if (error) console.error(error)
     if (loading) navigate('/loading')
     if (!loading && user) navigate('/')
     if (!loading && !user) navigate('/login')
-    if (error) console.error(error)
   }, [user, loading])
   
 

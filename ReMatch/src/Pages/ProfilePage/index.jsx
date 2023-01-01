@@ -10,6 +10,13 @@ import { useState } from 'react'
 import './styles.scss'
 import { signOut } from 'firebase/auth'
 import { auth } from '../../firebase'
+import { useDispatch } from 'react-redux'
+import { clearChats } from '../../Slices/ChatsSlice'
+import { clearStudent } from '../../Slices/StudentSlice'
+import { clearFaculty } from '../../Slices/FacultySlice'
+import { clearApplications } from '../../Slices/ApplicationsSlice'
+import { clearMessages } from '../../Slices/MessagesSlice'
+import { clearProjects } from '../../Slices/ProjectsSlice'
 
 
 const PitchCard = ({ pitch }) => {
@@ -168,11 +175,18 @@ const PreferredCard = ({  }) => {
 
 const SignOutCard = () => {
   const [loading, setLoading] = useState(false)
+  const dispatch = useDispatch()
 
   const logout = () => {
     setLoading(true)
     signOut(auth)
-    .then(() => setLoading(false))
+    .then(() => {
+      setLoading(false)
+
+      // Clear Redux Store
+      const actions = [ clearApplications, clearChats, clearFaculty, clearMessages, clearProjects, clearStudent ]
+      actions.forEach(action => dispatch(action()))
+    })
   }
 
   return (

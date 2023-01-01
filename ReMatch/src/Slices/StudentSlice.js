@@ -21,9 +21,12 @@ export const studentSlice = createSlice({
     updateStudent: (state, action) => {
       state.student = {...action.payload}
     },
+    clearStudent: state => {
+      state.student = {...initialState}
+    }
   }
 })
 
 
-export const { updateStudent } = studentSlice.actions
+export const { updateStudent, clearStudent } = studentSlice.actions
 export default studentSlice.reducer
