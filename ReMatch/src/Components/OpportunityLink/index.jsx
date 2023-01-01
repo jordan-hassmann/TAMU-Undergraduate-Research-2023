@@ -3,10 +3,11 @@ import Skill from '../Skill'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import './styles.scss'
+import { useSelector } from 'react-redux'
 
 
-const OpportunityLink = ({ opportunity, onClick }) => {
-  
+const OpportunityLink = ({ opportunity, headline, onClick }) => {
+
   return (
     <div className="opportunity-link" onClick={ onClick }>
 
@@ -14,23 +15,13 @@ const OpportunityLink = ({ opportunity, onClick }) => {
 
       <div className="content">
 
-        <h3>Machine learning for predicting glucose trajectories</h3>
-        <p className="subtitle">
-          Irina Gaynanova  —  DeBakey Executive Research Leadership Program
-        </p>
-        <p className="description">
-          Data from wearable devices, such as continuous glucose 
-          monitors (CGM), activity trackers, ambulatory blood 
-          pressure monitors, and sleep EEG monitors, are increasingly 
-          common. This wealth of data has the potential...
-        </p>
+        <h3>{ opportunity['title'] }</h3>
+        <p className="subtitle">{ headline }</p>
+        <p className="description">{ opportunity['description'] }</p>
         <div className="skills">
-          <Skill />
-          <Skill />
-          <Skill />
-          <Skill />
+          { opportunity['required_skills'].map(skill => <Skill skill={skill} />) }
         </div>
-        <p className="date">Posted 3 weeks ago</p>
+        <p className="date">Posted { opportunity['timestamp'] }</p>
 
       </div>
 

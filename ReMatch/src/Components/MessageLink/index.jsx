@@ -4,17 +4,17 @@ import './styles.scss'
 
 
 
-const MessageLink = ({ message }) => {
+const MessageLink = ({ message, faculty, onClick }) => {
   return (
-    <div className="message-link">
+    <div className="message-link" onClick={ onClick }>
 
       <div className="profile-image">
         <FontAwesomeIcon icon="circle-user" size='2x'/>
       </div>
 
       <div className="content">
-        <h4>Tracy Hammond</h4>
-        <p>Lorem ipsum dolor sit amet, lorem ipsum</p>
+        <h4>{ faculty }</h4>
+        <p>{ message }</p>
       </div>
 
       <div className="symbol">

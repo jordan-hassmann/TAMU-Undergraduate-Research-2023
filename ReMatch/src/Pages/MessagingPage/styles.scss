@@ -8,6 +8,7 @@
 
   .message-drawer {
     grid-area: drawer;
+    position: relative;
     border-right: 1px solid #B9B9B9;
 
     .search {
@@ -19,8 +20,10 @@
       display: grid;
       align-content: start;
       gap: 10px;
+      max-width: 100%;
       height: calc(100% - 52px);
       overflow-y: scroll;
+      position: relative;
 
       &::-webkit-scrollbar {
         width: 6px;

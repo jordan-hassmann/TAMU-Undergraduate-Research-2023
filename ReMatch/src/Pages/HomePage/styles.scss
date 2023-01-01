@@ -89,6 +89,16 @@
       position: relative;
 
       display: grid;
+      animation: show 0.2s ease forwards;
+    }
+
+    @keyframes show {
+      from {
+        transform: translateY(100vh);
+      }
+      to {
+        transform: translateY(0);
+      }
     }
 
     .header {
@@ -251,6 +261,7 @@
   .options {
     display: flex;
     justify-content: end;
+    align-items: center;
   }
 
   .option {
@@ -282,5 +293,24 @@
   .option:active {
     background-color: #2d9e2b;
     transition: background-color 0s ease;
+  }
+
+
+  .message-success-icon {
+    display: grid;
+    place-items: center;
+
+    animation: fade-in 0.2s ease forwards;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: scale(0);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
   }
 }

@@ -39,6 +39,8 @@ const HomePage = () => {
   const [openFilters, setOpenFilters] = useState(false)
   const [sending, setSending] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
+  const [messenger, setMessenger] = useState(false);
+  const [sentSuccess, setSentSuccess] = useState(false)
   const msgRef = useRef()
   
 
@@ -67,12 +69,22 @@ const HomePage = () => {
 
     await SendMessage(msg)
     msgRef.current.value = ''
+    setSentSuccess(true)
     setSending(false)
+    setTimeout(() => {
+      setMessenger(false)
+      setSentSuccess(false)
+    }, 1200);
   }
 
-  const getHeadline = () => {
-    const f = faculty[selectedProject.facultyID]
+  const getHeadline = project => {
+    const f = faculty[project.facultyID]
     return f.firstname + ' ' + f.lastname + ' - ' + f.headline
+  }
+
+  const updateSelectedProject = project => {
+    if (!selectedProject || project.id !== selectedProject.id) setSelectedProject(project)
+    else setSelectedProject(null) 
   }
 
  
@@ -88,7 +100,7 @@ const HomePage = () => {
           </button>
         </div>
         <div className="opportunities">
-          { projects.map(project => <OpportunityLink key={project.id} onClick={ () => setSelectedProject(project) } /> )}
+          { projects.map(project => <OpportunityLink opportunity={project} headline={ getHeadline(project) } key={project.id} onClick={ () => updateSelectedProject(project) } /> ) }
         </div>
       </div>
 
@@ -104,16 +116,21 @@ const HomePage = () => {
                 <span>Apply</span>
                 <FontAwesomeIcon icon='file-signature' />
               </button>
-              <p className="subtitle">{ getHeadline() }</p>
+              <p className="subtitle">{ getHeadline(selectedProject) }</p>
               <div className="options">
 
                 <Popover 
                 placement='bottomLeft' 
                 title='Send Irina a message' 
                 trigger='click'
+                open={ messenger }
                 content={
                   <div className="popover-card">
-                    <textarea ref={ msgRef } />
+                    {
+                      sentSuccess
+                      ? <div className='message-success-icon'><FontAwesomeIcon icon='circle-check' size='5x' color='#3ACC37' /></div>
+                      : <textarea ref={ msgRef } />
+                    }
                     <div className="options">
                       <button className="option" onClick={ sendMessage }>
                         <span>Send</span>
@@ -127,7 +144,7 @@ const HomePage = () => {
                   </div>
                 }
                 >
-                  <button className="message">
+                  <button className="message" onClick={ () => setMessenger(!messenger) }>
                     <span>Message</span>
                     <FontAwesomeIcon icon='message' />
                   </button>
