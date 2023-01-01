@@ -175,6 +175,7 @@ const ContentWrapper = ({ user }) => {
         const docs = snapshot.docChanges().map(change => ({ 
           ...change.doc.data(), 
           id: change.doc.id, 
+          submitted: change.doc.data().submitted.seconds,
         }))
         dispatch(addApplications(docs))
 

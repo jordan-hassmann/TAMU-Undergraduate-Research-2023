@@ -33,6 +33,7 @@ const ApplicationsPage = () => {
   const faculty = useSelector(state => state.faculty.values)
   const projects = useSelector(state => state.projects.values)
 
+  const [selectedApplication, setSelectedApplication] = useState(null)
   const [filters, setFilters] = useState([])
   const [open, setOpen] = useState(false);
   const [modal, setModal] = useState(false);
@@ -72,9 +73,14 @@ const ApplicationsPage = () => {
     })
   }
 
-  const getHeadline = application => {
+  const getFaculty = application => {
     const f = faculty[application.facultyID]
     return f.firstname + ' ' + f.lastname
+  }
+
+  const getHeadline = application => {
+    const f = faculty[application.facultyID]
+    return f.firstname + ' ' + f.lastname + ' - ' + f.headline
   }
 
   const getTitle = application => {
@@ -82,6 +88,17 @@ const ApplicationsPage = () => {
     return project.title
   }
 
+  const selectApplication = application => {
+
+    const project = projects.find(p => p.id === application.projectID)
+    setSelectedApplication({ 
+      ...application, 
+      project: {
+        ...project, 
+        headline: getHeadline(application)
+      } 
+    })
+  }
 
 
 
@@ -113,9 +130,9 @@ const ApplicationsPage = () => {
           { applications.map((application, i) => (
             <ApplicationCard 
               status={ application.status }
-              onOpen={ () => setModal(true) } 
+              onOpen={ () => selectApplication(application) }
               title={ getTitle(application) } 
-              faculty={ getHeadline(application) }
+              faculty={ getFaculty(application) }
               key={ application.id } 
             />
           ) )}
@@ -124,7 +141,7 @@ const ApplicationsPage = () => {
       </div>
 
 
-      <ApplicationModal open={ modal } onClose={ () => setModal(false) } />
+      <ApplicationModal open={ selectedApplication } application={ selectedApplication } onClose={ () => setSelectedApplication(null) } />
     </div>
   )
 }
