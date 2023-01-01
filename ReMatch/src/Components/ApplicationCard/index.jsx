@@ -10,47 +10,35 @@ import './styles.scss'
 
 const CustomProgress = ({ status }) => {
 
-  let props = null
 
-  switch (status) {
-    case 'ACCEPTED': 
-      props = {
-        strokeColor: '#3ACC37', 
-        trailColor: 'rgba(0, 179, 255, 0.30)',
-        icon: <FontAwesomeIcon icon='thumbs-up' />,
-        progress: 100,
-      }
-      break
-
-    case 'IN REVIEW': 
-      props = {
-        strokeColor: '#00B2FF', 
-        trailColor: 'rgba(0, 179, 255, 0.30)',
-        icon: '',
-        progress: 75,
-      }
-      break
-    
-    case 'IN PROGRESS': 
-      props = {
-        strokeColor: '#00B2FF', 
-        trailColor: 'rgba(0, 179, 255, 0.30)',
-        icon: '',
-        progress: 25,
-      }
-      break
-    
-    case 'REJECTED': 
-      props = {
-        strokeColor: '#FF0000', 
-        trailColor: 'rgba(0, 0, 0, 0.30)',
-        icon: <FontAwesomeIcon icon='xmark' color='#FF0000' />,
-        progress: 100,
-      }
-      break
+  const variants = {
+    'Accepted': {
+      strokeColor: '#3ACC37', 
+      trailColor: 'rgba(0, 179, 255, 0.30)',
+      icon: <FontAwesomeIcon icon='thumbs-up' />,
+      progress: 100,
+    },
+    'In Review': {
+      strokeColor: '#00B2FF', 
+      trailColor: 'rgba(0, 179, 255, 0.30)',
+      icon: '',
+      progress: 75,
+    },
+    'In Progress': {
+      strokeColor: '#00B2FF', 
+      trailColor: 'rgba(0, 179, 255, 0.30)',
+      icon: '',
+      progress: 25,
+    },
+    'Rejected': {
+      strokeColor: '#FF0000', 
+      trailColor: 'rgba(0, 0, 0, 0.30)',
+      icon: <FontAwesomeIcon icon='xmark' color='#FF0000' />,
+      progress: 100,
+    }
   }
 
-  const { strokeColor, trailColor, icon, progress } = props
+  const { strokeColor, trailColor, icon, progress } = variants[status]
   return (
     <Progress 
       className='progress' 
@@ -66,17 +54,24 @@ const CustomProgress = ({ status }) => {
 }
 
 
-const ApplicationCard = ({ application, onOpen }) => {
+const ApplicationCard = ({ title, faculty, status, onOpen }) => {
+
+  const statusSubtitle = {
+    'Accepted': 'You have been accepted for this research position!',
+    'In Review': 'Your application is currently being reviewed',
+    'In Progress': 'You have not completed your application yet',
+    'Rejected': 'You are no longer being considered for this position',
+  }
 
   return (
     <div className="application-card">
 
       <div className="info">
         <h5>Research</h5>
-        <h3>{ application }</h3>
+        <h3>{ title }</h3>
         <div className="faculty">
           <FontAwesomeIcon icon='diagram-project' />
-          <p className="subtitle">Tracy Hammond</p>
+          <p className="subtitle">{ faculty }</p>
         </div>
         <button onClick={ onOpen }>
           <span>View Application</span>
@@ -87,11 +82,11 @@ const ApplicationCard = ({ application, onOpen }) => {
       <div className="status">
         <div className="content">
           <h5>Status</h5>
-          <h3>In Progress</h3>
-          <p className="subtitle">You have not completed your application yet</p>
+          <h3>{ status }</h3>
+          <p className="subtitle">{ statusSubtitle[status] }</p>
         </div>
 
-        <CustomProgress className='progress' status='REJECTED' />
+        <CustomProgress className='progress' status={status} />
       </div>
 
       <button className="remove">

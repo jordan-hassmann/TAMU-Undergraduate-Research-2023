@@ -1,5 +1,6 @@
 // React
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Input, Dropdown } from 'antd'
@@ -11,22 +12,26 @@ import './styles.scss'
 
 
 
-const applications = [
-  'Improving LIDAR in Self-Driving Cars cars cars', 
-  'Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur ducimus libero architecto eligendi, labore totam.',
-  'Improving LIDAR in ', 
-  'Improving LIDAR in Self-Driving Cars cars cars', 
-  'Improving LIDAR in Self-Driving Cars', 
-  'Improving LIDAR in Self-Driving Cars', 
-  'Improving LIDAR in Self-Driving Cars', 
-  'Improving LIDAR in Self-Driving Cars', 
-  'Improving LIDAR in Self-Driving Cars', 
-  'Improving LIDAR in Self-Driving Cars', 
-  'Improving LIDAR in Self-Driving Cars', 
-]
+// const applications = [
+//   'Improving LIDAR in Self-Driving Cars cars cars', 
+//   'Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur ducimus libero architecto eligendi, labore totam.',
+//   'Improving LIDAR in ', 
+//   'Improving LIDAR in Self-Driving Cars cars cars', 
+//   'Improving LIDAR in Self-Driving Cars', 
+//   'Improving LIDAR in Self-Driving Cars', 
+//   'Improving LIDAR in Self-Driving Cars', 
+//   'Improving LIDAR in Self-Driving Cars', 
+//   'Improving LIDAR in Self-Driving Cars', 
+//   'Improving LIDAR in Self-Driving Cars', 
+//   'Improving LIDAR in Self-Driving Cars', 
+// ]
 
 
 const ApplicationsPage = () => {
+
+  const applications = useSelector(state => state.applications.values)
+  const faculty = useSelector(state => state.faculty.values)
+  const projects = useSelector(state => state.projects.values)
 
   const [filters, setFilters] = useState([])
   const [open, setOpen] = useState(false);
@@ -67,7 +72,15 @@ const ApplicationsPage = () => {
     })
   }
 
-  
+  const getHeadline = application => {
+    const f = faculty[application.facultyID]
+    return f.firstname + ' ' + f.lastname
+  }
+
+  const getTitle = application => {
+    const project = projects.find(p => p.id === application.projectID)
+    return project.title
+  }
 
 
 
@@ -97,7 +110,15 @@ const ApplicationsPage = () => {
 
 
         <div className="applications">
-          { applications.map((title, i) => <ApplicationCard onOpen={ () => setModal(true) } application={title} key={i} /> )}
+          { applications.map((application, i) => (
+            <ApplicationCard 
+              status={ application.status }
+              onOpen={ () => setModal(true) } 
+              title={ getTitle(application) } 
+              faculty={ getHeadline(application) }
+              key={ application.id } 
+            />
+          ) )}
         </div>
 
       </div>
