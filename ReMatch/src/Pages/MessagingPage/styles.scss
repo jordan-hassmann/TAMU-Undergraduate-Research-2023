@@ -10,6 +10,7 @@
     grid-area: drawer;
     position: relative;
     border-right: 1px solid #B9B9B9;
+    padding: 0;
 
     .search {
       padding: 10px;
@@ -20,10 +21,11 @@
       display: grid;
       align-content: start;
       gap: 10px;
-      max-width: 100%;
       height: calc(100% - 52px);
-      overflow-y: scroll;
+      overflow-y: auto;
       position: relative;
+
+      
 
       &::-webkit-scrollbar {
         width: 6px;

@@ -1,6 +1,9 @@
 // React
 import { useEffect, useState } from 'react';
 
+// Firebase
+import { SendMessage } from '../../API/Messaging';
+
 // Components
 import MessageLink from '../../Components/MessageLink';
 import Message from '../../Components/Message'
@@ -30,6 +33,8 @@ const MessagingPage = () => {
 
   const [selectedChat, setSelectedChat] = useState(0)
 
+
+
   const getFacultyName = chatIndex => {
     const f = faculty[chats[chatIndex].facultyID]
     return f.firstname + ' ' + f.lastname
@@ -38,6 +43,9 @@ const MessagingPage = () => {
   const filterMessages = chatIndex => {
     return messages.filter(msg => msg.chatID === chats[chatIndex].id)
   }
+
+  
+
 
   return (
     <div className="messaging-page">
