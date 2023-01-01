@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 // Pages
 import LoginPage from './Pages/LoginPage'
 import LoadingPage from './Pages/LoadingPage'
+import LoadingData from './Components/LoadingData'
 import Navbar from './Components/Navbar'
 import HomePage from './Pages/HomePage'
 import PageNotFound from './Components/PageNotFound'
@@ -207,13 +208,15 @@ const ContentWrapper = ({ user }) => {
   }, [])
 
 
-  return (
+  return messagesLoaded && chatsLoaded && applicationsLoaded && projectsLoaded && studentLoaded
+  ? (
     <>
       {/* { messagesLoaded && chatsLoaded && applicationsLoaded && projectsLoaded && studentLoaded && <Navbar />} */}
       <Navbar />
       <Outlet />
     </>
   )
+  : <LoadingData data={[messagesLoaded, chatsLoaded, applicationsLoaded, projectsLoaded, studentLoaded]} />
 }
 
 

@@ -2,7 +2,6 @@
 
 
 TODOs: 
-- Prevent page load until redux is loaded with data
 - Apply button functionality
 - Connection "Apply" button
 - Connect profile page to live data 

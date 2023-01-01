@@ -1,0 +1,23 @@
+
+
+.loading-data {
+  display: grid;
+  place-items: center;
+  grid-template-areas: 'x progress y';
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: 100vh;
+
+
+  .progress {
+    grid-area: progress;
+    width: 100%;
+    display: grid;
+    row-gap: 15px;
+
+    .message {
+      font-weight: 600;
+      color: rgb(170, 170, 170);
+      white-space: nowrap;
+    }
+  }
+}
