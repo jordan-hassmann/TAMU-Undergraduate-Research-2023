@@ -121,7 +121,7 @@ const HomePage = () => {
 
                 <Popover 
                 placement='bottomLeft' 
-                title='Send Irina a message' 
+                title={`Send ${faculty[selectedProject.facultyID].firstname} a message`}
                 trigger='click'
                 open={ messenger }
                 content={

@@ -22,7 +22,7 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 import './App.scss'
 
 // Firebase
-import { onSnapshot, collection, doc, query, where, getDocs, getDoc } from 'firebase/firestore'
+import { onSnapshot, collection, doc, query, where, getDocs, getDoc, orderBy } from 'firebase/firestore'
 import { addMessages } from './Slices/MessagesSlice'
 import { addChats } from './Slices/ChatsSlice'
 import { updateStudent } from './Slices/StudentSlice'
@@ -133,7 +133,7 @@ const ContentWrapper = ({ user }) => {
 
 
       // Listen to message updates for current student
-      const messagesQuery = query(collection(db, 'Messages'), where('studentID', '==', user.uid))
+      const messagesQuery = query(collection(db, 'Messages'), where('studentID', '==', user.uid), orderBy('timestamp', 'asc'))
       const unsubMessages = onSnapshot(messagesQuery, snapshot => {  
 
         const docs = snapshot.docChanges().map(change => ({ 

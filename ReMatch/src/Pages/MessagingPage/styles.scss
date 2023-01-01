@@ -113,7 +113,8 @@
         display: grid;
         align-content: start;
         gap: 20px;
-        padding: 20px 40px 0 40px;
+        padding: 20px 40px 20px 40px;
+        scroll-behavior: smooth;
 
         &::-webkit-scrollbar {
           width: 6px;
