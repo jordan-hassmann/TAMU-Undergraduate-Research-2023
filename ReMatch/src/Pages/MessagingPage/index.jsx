@@ -83,7 +83,15 @@ const MessagingPage = () => {
           <Search placeholder="Search" onSearch={onSearch} />
         </div>
         <div className="messages">
-          { chats.map((chat, i) => <MessageLink key={ chat.id } message={ filterMessages(i).at(-1) ? filterMessages(i).at(-1).message : '' } faculty={ getFacultyName(i) } onClick={ () => setSelectedChat(i) } />) }
+          { chats.map((chat, i) => (
+              <MessageLink 
+                key={ chat.id } 
+                message={ filterMessages(i).at(-1) ? filterMessages(i).at(-1).message : '' } 
+                faculty={ getFacultyName(i) } 
+                onClick={ () => setSelectedChat(i) } 
+                selected={ chats[selectedChat].id === chat.id }
+              />
+          )) }
         </div>
       </div>
 

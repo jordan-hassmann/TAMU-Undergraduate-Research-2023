@@ -5,12 +5,11 @@
   grid-template-areas: 'content arrow';
   grid-template-columns: auto 40px;
   border-radius: 8px;
-  border: 2px solid transparent;
   cursor: pointer;
+  transition: background-color 0s ease;
 
-  &:hover {
-    border: 2px solid rgb(136, 208, 255);
-    transition: background-color 0.2s ease, border 0.2s ease;
+  &:hover, &.true {
+    background-color: rgba(155, 155, 155, 0.1);
   }
 
   .content {

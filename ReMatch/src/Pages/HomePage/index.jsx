@@ -100,7 +100,15 @@ const HomePage = () => {
           </button>
         </div>
         <div className="opportunities">
-          { projects.map(project => <OpportunityLink opportunity={project} headline={ getHeadline(project) } key={project.id} onClick={ () => updateSelectedProject(project) } /> ) }
+          { projects.map(project => (
+            <OpportunityLink 
+              opportunity={project} 
+              headline={ getHeadline(project) } 
+              key={project.id} 
+              onClick={ () => updateSelectedProject(project) } 
+              selected={ selectedProject && selectedProject.id === project.id }
+            />
+          ) ) }
         </div>
       </div>
 

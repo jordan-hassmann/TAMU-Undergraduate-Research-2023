@@ -10,9 +10,8 @@
   cursor: pointer;
 
 
-  &:hover {
-    background-color: rgba(160, 244, 255, 0.36);
-    transition: background-color 0.2s ease;
+  &:hover, &.true {
+    background-color: rgba(155, 155, 155, 0.1);
   }
 
   .profile-image {

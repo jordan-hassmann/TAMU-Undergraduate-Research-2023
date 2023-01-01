@@ -4,9 +4,9 @@ import './styles.scss'
 
 
 
-const MessageLink = ({ message, faculty, onClick }) => {
+const MessageLink = ({ message, faculty, onClick, selected }) => {
   return (
-    <div className="message-link" onClick={ onClick }>
+    <div className={`message-link ${selected}`} onClick={ onClick }>
 
       <div className="profile-image">
         <FontAwesomeIcon icon="circle-user" size='2x'/>
