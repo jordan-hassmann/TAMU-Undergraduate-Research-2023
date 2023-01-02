@@ -1,9 +1,10 @@
 // React
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Input, Dropdown } from 'antd'
+import { Input, Dropdown, Empty, Button } from 'antd'
 import FilterChip from '../../Components/FilterChip'
 import ApplicationCard from '../../Components/ApplicationCard'
 import ApplicationModal from '../../Components/ApplicationModal'
@@ -12,23 +13,11 @@ import './styles.scss'
 
 
 
-// const applications = [
-//   'Improving LIDAR in Self-Driving Cars cars cars', 
-//   'Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur ducimus libero architecto eligendi, labore totam.',
-//   'Improving LIDAR in ', 
-//   'Improving LIDAR in Self-Driving Cars cars cars', 
-//   'Improving LIDAR in Self-Driving Cars', 
-//   'Improving LIDAR in Self-Driving Cars', 
-//   'Improving LIDAR in Self-Driving Cars', 
-//   'Improving LIDAR in Self-Driving Cars', 
-//   'Improving LIDAR in Self-Driving Cars', 
-//   'Improving LIDAR in Self-Driving Cars', 
-//   'Improving LIDAR in Self-Driving Cars', 
-// ]
 
 
 const ApplicationsPage = () => {
-
+  
+  const navigate = useNavigate()
   const applications = useSelector(state => state.applications.values)
   const faculty = useSelector(state => state.faculty.values)
   const projects = useSelector(state => state.projects.values)
@@ -126,17 +115,33 @@ const ApplicationsPage = () => {
         </div>
 
 
-        <div className="applications">
-          { applications.map((application, i) => (
-            <ApplicationCard 
-              status={ application.status }
-              onOpen={ () => selectApplication(application) }
-              title={ getTitle(application) } 
-              faculty={ getFaculty(application) }
-              key={ application.id } 
-            />
-          ) )}
-        </div>
+        {
+          !applications.length
+          ? (
+            <div className="empty">
+              <Empty
+                image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+                imageStyle={{ height: 150 }}
+                description='You have not applied to any projects yet'
+              >
+                <Button onClick={ () => navigate('/') } type="primary">Explore Projects</Button>
+              </Empty>
+            </div>
+          )
+          : (
+            <div className="applications">
+              { applications.map(application => (
+                <ApplicationCard 
+                  status={ application.status }
+                  onOpen={ () => selectApplication(application) }
+                  title={ getTitle(application) } 
+                  faculty={ getFaculty(application) }
+                  key={ application.id } 
+                />
+              ) )}
+            </div>
+          )
+        }
 
       </div>
 

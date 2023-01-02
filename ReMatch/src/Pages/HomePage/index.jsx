@@ -2,6 +2,7 @@
 import { useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 
+import ApplyModal from '../../Components/ApplyModal';
 import OpportunityLink from '../../Components/OpportunityLink';
 import Skill from '../../Components/Skill';
 
@@ -35,8 +36,10 @@ const HomePage = () => {
   const projects = useSelector(state => state.projects.values)
   const chats = useSelector(state => state.chats.values)
   const faculty = useSelector(state => state.faculty.values)
+  const applications = useSelector(state => state.applications.values)
 
   const [openFilters, setOpenFilters] = useState(false)
+  const [openApply, setOpenApply] = useState(false)
   const [sending, setSending] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
   const [messenger, setMessenger] = useState(false);
@@ -120,10 +123,21 @@ const HomePage = () => {
 
             <div className="header">
               <h3 className='header-title'>{ selectedProject.title }</h3>
-              <button className="apply">
-                <span>Apply</span>
-                <FontAwesomeIcon icon='file-signature' />
-              </button>
+              {
+                applications.find(app => app.projectID == selectedProject.id)
+                ? (
+                  <button className="applied">
+                    <span>Applied</span>
+                    <FontAwesomeIcon icon='check' />
+                  </button>
+                )
+                : (
+                  <button className="apply" onClick={ () => setOpenApply(true) }>
+                    <span>Apply</span>
+                    <FontAwesomeIcon icon='file-signature' />
+                  </button>
+                )
+              }
               <p className="subtitle">{ getHeadline(selectedProject) }</p>
               <div className="options">
 
@@ -205,6 +219,7 @@ const HomePage = () => {
       </div>  
 
       <FilterModal open={ openFilters } onClose={ () => setOpenFilters(false) } />
+      <ApplyModal open={ openApply } project={ selectedProject } onClose={ () => setOpenApply(false) } />
     </div>
   )
 }

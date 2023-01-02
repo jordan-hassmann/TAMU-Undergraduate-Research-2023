@@ -11,7 +11,8 @@ const initialState = {
     skills: [],
     duration: [],
     minPay: 0
-  }
+  },
+  loaded: false,
 }
 
 export const studentSlice = createSlice({
@@ -20,9 +21,21 @@ export const studentSlice = createSlice({
   reducers: {
     updateStudent: (state, action) => {
       state.student = {...action.payload}
+      state.loaded = true
     },
     clearStudent: state => {
-      state.student = {...initialState}
+      state.student = {
+        id: null, 
+        firstname: '',
+        lastname: '',
+        headline: '',
+        pitch: '',
+        resumeID: '',
+        skills: [],
+        duration: [],
+        minPay: 0
+      }
+      state.loaded = false
     }
   }
 })

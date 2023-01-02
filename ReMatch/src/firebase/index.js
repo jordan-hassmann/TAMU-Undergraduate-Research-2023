@@ -8,6 +8,7 @@ import { getAnalytics } from "firebase/analytics";
 
 import { getFirestore } from 'firebase/firestore'
 import { getAuth } from 'firebase/auth'
+import { getStorage } from 'firebase/storage'
 
 
 // Your web app's Firebase configuration
@@ -25,17 +26,10 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-
 const db = getFirestore(app)
 const auth = getAuth(app)
-
-// Signed In User Observer
-let user = null
-let loggedIn = false
-auth.onAuthStateChanged(user => {
-  user = user 
-  loggedIn = Boolean(user)
-})
+const storage = getStorage(app)
 
 
-export { db, auth, user, loggedIn }
+
+export { db, auth, storage }

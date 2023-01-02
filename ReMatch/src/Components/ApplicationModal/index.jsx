@@ -6,12 +6,23 @@ import Skill from '../Skill'
 import Fab from '../Fab'
 import './styles.scss'
 import { useState } from 'react'
+import { RevokeApplication } from '../../API/Applications'
+import { Popconfirm, message } from 'antd'
 
 
 const ApplicationModal = ({ open, onClose, application }) => {
 
   const [showDetails, setShowDetails] = useState(true)
   const [showApplication, setShowApplication] = useState(true)
+
+
+  const removeApplication = async () => {
+    onClose()
+    await RevokeApplication(application)
+    message.success('Successfully revoked application')
+  }
+
+
 
   return (
     <Modal 
@@ -125,8 +136,8 @@ const ApplicationModal = ({ open, onClose, application }) => {
                 <h4>Resume</h4>
                 <div className="resume">
                   <span>Applied with:</span> 
-                  <span>Resume - Jordan Hassmann.pdf</span>
-                  <FontAwesomeIcon icon='cloud-download' />
+                  <span>{ application.filename }</span>
+                  <a target='_blank' href={ application.resumeURL }><FontAwesomeIcon icon='cloud-download' /></a>
                 </div>
               </div>
 
@@ -138,10 +149,18 @@ const ApplicationModal = ({ open, onClose, application }) => {
 
 
           <div className="options">
-            <button className="revoke">
-              <span>Revoke Application</span>
-              <FontAwesomeIcon icon='trash' color='#FF0000' size='lg' />
-            </button>
+            <Popconfirm 
+              title="Revoke this application"
+
+              onConfirm={ removeApplication }
+              okText="Yes"
+              cancelText="No"
+            >
+              <button className="revoke">
+                <span>Revoke Application</span>
+                <FontAwesomeIcon icon='trash' color='#FF0000' size='lg' />
+              </button>
+            </Popconfirm>
           </div>
         </div>
       }

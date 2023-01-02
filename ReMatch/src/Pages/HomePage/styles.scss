@@ -153,6 +153,13 @@
         }
       }
 
+      .applied {
+        grid-area: apply;
+        background-color: #005f9e;
+        cursor: default;
+        color: #0092f3;
+      }
+
       .message {
         background-color: #18A0FB;
 

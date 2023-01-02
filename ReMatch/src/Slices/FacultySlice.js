@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  values: {}
+  values: {},
+  loaded: false,
 }
 
 export const facultySlice = createSlice({
@@ -10,9 +11,11 @@ export const facultySlice = createSlice({
   reducers: {
     addFaculty: (state, action) => {
       state.values = {...state.values, ...action.payload}
+      state.loaded = true
     },
     clearFaculty: state => {
       state.values = {}
+      state.loaded = false
     }
   }
 })

@@ -27,7 +27,7 @@ import { onSnapshot, collection, doc, query, where, getDocs, getDoc, orderBy } f
 import { addMessages } from './Slices/MessagesSlice'
 import { addChats } from './Slices/ChatsSlice'
 import { updateStudent } from './Slices/StudentSlice'
-import { addApplications } from './Slices/ApplicationsSlice'
+import { addApplications, removeApplications } from './Slices/ApplicationsSlice'
 import { addFaculty } from './Slices/FacultySlice'
 import { addProjects } from './Slices/ProjectsSlice'
 
@@ -65,6 +65,7 @@ import {
   faQuestionCircle,
   faCloudDownload,
   faLayerGroup,
+  faFileArrowUp,
 } from '@fortawesome/free-solid-svg-icons'
 library.add(
   faHippo, 
@@ -97,6 +98,7 @@ library.add(
   faQuestionCircle,
   faCloudDownload,
   faLayerGroup,
+  faFileArrowUp,
 )
 
 
@@ -106,20 +108,14 @@ library.add(
 
 
 
-const separate = changes => {
-  const docs = { added: [], updated: [], removed: [] }
-  changes.forEach(change => docs[change.type].push({ id: change.doc.id, ...change.doc.data() }))
-  return docs 
-}
-
-
 const ContentWrapper = ({ user }) => {
   const dispatch = useDispatch()
-  const messagesLoaded      = useSelector(state => state.messages.values.length > 0)
-  const chatsLoaded         = useSelector(state => state.chats.values.length > 0)
-  const applicationsLoaded  = useSelector(state => state.applications.values.length > 0)
-  const projectsLoaded      = useSelector(state => state.projects.values.length > 0)
-  const studentLoaded       = useSelector(state => state.student.student.id)
+  const messagesLoaded      = useSelector(state => state.messages.loaded)
+  const chatsLoaded         = useSelector(state => state.chats.loaded)
+  const applicationsLoaded  = useSelector(state => state.applications.loaded)
+  const projectsLoaded      = useSelector(state => state.projects.loaded)
+  const studentLoaded       = useSelector(state => state.student.loaded)
+
 
 
   useEffect(() => {
@@ -172,12 +168,19 @@ const ContentWrapper = ({ user }) => {
       const applicationsQuery = query(collection(db, 'Applications'), where('studentID', '==', user.uid))
       const unsubApplications = onSnapshot(applicationsQuery, snapshot => {
 
-        const docs = snapshot.docChanges().map(change => ({ 
+        const added = snapshot.docChanges().filter(change => change.type === 'added').map(change => ({ 
           ...change.doc.data(), 
           id: change.doc.id, 
           submitted: change.doc.data().submitted.seconds,
         }))
-        dispatch(addApplications(docs))
+        const removed = snapshot.docChanges().filter(change => change.type === 'removed').map(change => ({
+          ...change.doc.data(),
+          id: change.doc.id, 
+          submitted: change.doc.data().submitted.seconds,
+        }))
+
+        dispatch(addApplications(added))
+        dispatch(removeApplications(removed))
 
       })
 
@@ -209,10 +212,9 @@ const ContentWrapper = ({ user }) => {
   }, [])
 
 
-  return messagesLoaded && chatsLoaded && applicationsLoaded && projectsLoaded && studentLoaded
+  return [messagesLoaded, chatsLoaded, applicationsLoaded, projectsLoaded, studentLoaded].every(loaded => loaded)
   ? (
     <>
-      {/* { messagesLoaded && chatsLoaded && applicationsLoaded && projectsLoaded && studentLoaded && <Navbar />} */}
       <Navbar />
       <Outlet />
     </>

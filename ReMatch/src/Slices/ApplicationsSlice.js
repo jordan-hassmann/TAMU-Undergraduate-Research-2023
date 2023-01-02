@@ -1,7 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 
 const initialState = {
-  values: []
+  values: [],
+  loaded: false,
 }
 
 export const applicationsSlice = createSlice({
@@ -10,13 +11,18 @@ export const applicationsSlice = createSlice({
   reducers: {
     addApplications: (state, action) => {
       state.values = [...state.values, ...action.payload]
+      state.loaded = true
     },
     clearApplications: state => {
       state.values = []
+      state.loaded = false
+    },
+    removeApplications: (state, action) => {
+      state.values = [...state.values].filter(item => !action.payload.find(app => app.id === item.id))
     }
   }
 })
 
 
-export const { addApplications, clearApplications } = applicationsSlice.actions
+export const { addApplications, clearApplications, removeApplications } = applicationsSlice.actions
 export default applicationsSlice.reducer
