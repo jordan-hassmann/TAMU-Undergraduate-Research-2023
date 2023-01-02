@@ -89,10 +89,6 @@ const ApplicationCard = ({ title, faculty, status, onOpen }) => {
         <CustomProgress className='progress' status={status} />
       </div>
 
-      <button className="remove">
-        <FontAwesomeIcon icon='trash' />
-      </button>
-
     </div>
   )
 }

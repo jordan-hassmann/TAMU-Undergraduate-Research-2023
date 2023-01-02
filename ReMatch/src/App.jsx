@@ -133,8 +133,11 @@ const ContentWrapper = ({ user }) => {
       // Get logged in student
       const student = await getDoc(doc(db, 'Students', user.uid))
       const studentName = student.data().firstname + ' ' + student.data().lastname
-      dispatch(updateStudent({ ...student.data(), id: student.id }))
 
+      const studentQuery = query(doc(db, `Students/${user.uid}`))
+      const unsubStudent = onSnapshot(studentQuery, doc => {
+        dispatch(updateStudent({ id: doc.id, ...doc.data() }))
+      })
 
       // Listen to message updates for current student
       const messagesQuery = query(collection(db, 'Messages'), where('studentID', '==', user.uid), orderBy('timestamp', 'asc'))

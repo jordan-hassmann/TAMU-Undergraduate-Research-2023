@@ -3,8 +3,8 @@
 import './styles.scss'
 
 
-const Skill = ({ skill }) => {
-  return <p className="skill primary">{ skill }</p>
+const Skill = ({ skill, onClick }) => {
+  return <p onClick={ onClick } className="skill primary">{ skill }</p>
 }
 
 

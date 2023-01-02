@@ -19,5 +19,12 @@
     background-color: #D2B0FE;
     color: #7000FF;
   }
+
+
+  &.selected {
+    background-color: #ff2020;
+    color: #FFFFFF;
+    filter: grayscale(0) !important;
+  }
 }
 

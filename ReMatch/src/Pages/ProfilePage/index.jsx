@@ -1,5 +1,6 @@
 
-import { DatePicker, Input, Spin } from 'antd'
+import { DatePicker, Input, InputNumber, message, Spin, Tooltip } from 'antd'
+import dayjs from 'dayjs'
 
 // Styles
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -10,37 +11,27 @@ import { useState } from 'react'
 import './styles.scss'
 import { signOut } from 'firebase/auth'
 import { auth } from '../../firebase'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { clearChats } from '../../Slices/ChatsSlice'
 import { clearStudent } from '../../Slices/StudentSlice'
 import { clearFaculty } from '../../Slices/FacultySlice'
 import { clearApplications } from '../../Slices/ApplicationsSlice'
 import { clearMessages } from '../../Slices/MessagesSlice'
 import { clearProjects } from '../../Slices/ProjectsSlice'
+import { UpdateStudent } from '../../API/Profile'
 
 
-const PitchCard = ({ pitch }) => {
+const PitchCard = ({ student }) => {
   
   return (
     <div className="pitch-card card">
       <h5 className='subtitle-header'>Pitch</h5>
-      <h2>John Smith</h2>
+      <h2>{ student.firstname + ' ' + student.lastname }</h2>
       <div className="caption">
         <FontAwesomeIcon icon='arrow-turn-up' style={{ transform: 'rotate(90deg)' }} size='lg' />
-        <p>Texas A&M Honors CS 23' | Web Developer | Software Engineer</p>
+        <p>{ student.headline }</p>
       </div>
-      <p className="description">
-        Lorem ipsum dolor sit amet, consectetur adipiscing 
-        elit, sed do eiusmod tempor incididunt ut labore et 
-        dolore magna aliqua. Ut enim ad minim veniam, quis 
-        nostrud exercitation ullamco laboris nisi ut aliquip 
-        ex ea commodo consequat. <br /><br />
-
-        Duis aute irure dolor in reprehenderit in voluptate 
-        velit esse cillum dolore eu fugiat nulla pariatur. 
-        Excepteur sint occaecat cupidatat non proident, sunt 
-        in culpa qui officia deserunt mollit anim id est laborum.
-      </p>
+      <p className="description">{ student.pitch }</p>
 
       <button className="edit-fab">
         <FontAwesomeIcon icon='pen-to-square' size='xl' />
@@ -51,33 +42,88 @@ const PitchCard = ({ pitch }) => {
 
 
 
-const SkillsCard = ({ skills }) => {
+const SkillsCard = ({ student }) => {
+
+
+  const [toDelete, setToDelete] = useState([])
+  const [deleting, setDeleting] = useState(false)
+
+  const select = (e, skill) => {
+    if (!deleting) return 
+    
+    if (toDelete.includes(skill)) {
+      setToDelete(prev => [...prev.filter(s => s !== skill)])
+      e.target.classList.remove('selected')
+    } else {
+      setToDelete(prev => [...prev, skill])
+      e.target.classList.add('selected')
+    }
+    
+  }
+
+  const removeSkills = async () => {
+    if (!toDelete.length) return 
+
+    await UpdateStudent(student.id, { skills: student.skills.filter(value => !toDelete.includes(value)) })
+    .catch(err => message.error('There was an error updating your skills'))
+
+    setToDelete([])
+    setDeleting(false)
+  }
+
+  const addSkill = async e => {
+    const newSkill = e.target.value
+    if (e.key !== 'Enter') return
+    if (student.skills.includes(newSkill)) return 
+    e.target.value = ''
+    await UpdateStudent(student.id, { skills: [...student.skills, newSkill]})
+    .catch(err => message.error('There was an issue updating your skills'))
+  }
   
   return (
     <div className="skills-card card">
       <h5 className="subtitle-header">Skills</h5>
-      <div className="skills">
-        <Skill />
-        <Skill />
-        <Skill />
-        <Skill />
-        <Skill />
-        <Skill />
+      <div className={`skills ${ deleting ? 'deleting' : '' }`}>
+        { student.skills.map((skill, i) => (
+          <Skill onClick={ e => select(e, skill) } skill={skill} key={`${skill}-${i}`} />
+        )) }
+        
+        {
+          !deleting &&
+          <div className="skill-adder">
+            <input 
+              placeholder='Skill'
+              onKeyDown={ addSkill }
+              onFocus={ e => e.target.parentElement.classList.toggle('active', true) }
+              onBlur={ e => e.target.parentElement.classList.toggle('active', false) } 
+            />
+            <FontAwesomeIcon icon='plus' className='add-skill-icon' />
+          </div>
+        }
       </div>
-      <button className="add-skill">
-        <span>Add Skill</span>
-        <FontAwesomeIcon icon='plus' />
-      </button>
 
-      <button className="edit-fab">
-        <FontAwesomeIcon icon='pen-to-square' size='xl' />
-      </button>
+      {
+        deleting 
+        ? (
+          <Tooltip title='Confirm removal' placement='left'>
+            <button className="edit-fab confirm" onClick={ removeSkills }>
+              <FontAwesomeIcon icon='check' size='xl' />
+            </button>
+          </Tooltip>
+        )
+        : (
+          <Tooltip title='Select skills to remove' placement='left'>
+            <button className="edit-fab" onClick={ () => setDeleting(true) }>
+              <FontAwesomeIcon icon='pen-to-square' size='xl' />
+            </button>
+          </Tooltip>
+        )
+      }
     </div>
   )
 }
 
-const StatCard = ({ stat }) => {
-  const { type, count } = stat
+const StatCard = ({ count, type }) => {
   const colors = {
     'Accepted': '#3ACC37',
     'Rejected': '#FF0000',
@@ -99,19 +145,38 @@ const StatsCard = ({ stats }) => {
     <div className="stats-card card">
       <h5 className="subtitle-header">Stats</h5>
       <div className="stats">
-        { stats.map(stat => <StatCard key={ stat.type } stat={stat} /> )}
+        { Object.entries(stats).map(([key, val]) => <StatCard count={val} type={key} key={key} />) }
       </div>
     </div>
   )
 }
 
 
-const PreferredCard = ({  }) => {
+const PreferredCard = ({ student }) => {
 
   
-  const [pay, setPay] = useState(false)
-  const [dateRange, setDateRange] = useState([])
-  
+
+  const updateDuration = async duration => {
+    await UpdateStudent(student.id, { duration: duration ? duration.map(val => val.unix() * 1000) : [null, null] })
+    .catch(err => message.error('There was an error updating your preferred duration'))
+  }
+
+  const updatePay = async val => {
+    if (val === student.pay) return
+    await UpdateStudent(student.id, { pay: val })
+    .catch(err => message.error('There was an error updating your preferred pay'))
+  }
+
+  const updateMinPay = async e => {
+    if (e.target.value === student.minPay) return
+    await UpdateStudent(student.id, { minPay: e.target.value })
+    .catch(err => message.error('There was an error updating your preferred min pay'))
+  }
+
+
+
+
+
 
   return (
     <div className="preferred-card card">
@@ -123,7 +188,12 @@ const PreferredCard = ({  }) => {
           <p>Duration:</p>
         </div>
         <div className="fields">
-          <DatePicker.RangePicker picker='month' onChange={ val => setDateRange(val) } />
+          <DatePicker.RangePicker 
+            picker='month' 
+            value={ student.duration[0] ? student.duration.map(dayjs) : student.duration } 
+            format='YYYY MMM' 
+            onChange={ updateDuration } 
+          />
         </div>
 
 
@@ -132,13 +202,13 @@ const PreferredCard = ({  }) => {
         </div>
         <div className="fields">
 
-          <button className={`radio ${ pay ? 'active' : '' }`} onClick={ () => setPay(true)}>
-            { pay && <FontAwesomeIcon icon='circle-check' size='lg' color='#3ACC37' /> }
+          <button className={`radio ${ student.pay ? 'active' : '' }`} onClick={ () => updatePay(true) }>
+            { student.pay && <FontAwesomeIcon icon='circle-check' size='lg' color='#3ACC37' /> }
             <span>Yes</span>
           </button>
 
-          <button className={`radio ${ !pay ? 'active' : '' }`} onClick={ () => setPay(false)}>
-            { !pay && <FontAwesomeIcon icon='circle-xmark' size='lg' color='#FF0000' /> }
+          <button className={`radio ${ !student.pay ? 'active' : '' }`} onClick={ () => updatePay(false) }>
+            { !student.pay && <FontAwesomeIcon icon='circle-xmark' size='lg' color='#FF0000' /> }
             <span>No</span>
           </button>
 
@@ -148,8 +218,14 @@ const PreferredCard = ({  }) => {
         <div className="header">
           <p>Minimum Desired Pay: </p>
         </div>
-        <div className="fields">
-          <Input prefix={ <FontAwesomeIcon icon='dollar-sign' /> } placeholder='0.00' />
+        <div className="fields"> 
+          <input 
+            type='number' 
+            defaultValue={ student.minPay } 
+            onBlur={ updateMinPay } 
+            className='min-pay-input'
+            onKeyDown={ e => (e.key === 'e' || e.key === '.') && e.preventDefault() }  
+          />
         </div>
       </div>
 
@@ -192,25 +268,32 @@ const SignOutCard = () => {
 
 const ProfilePage = () => {
 
-  const stats = [
-    { type: 'Accepted',     count: 2 }, 
-    { type: 'Rejected',     count: 2 }, 
-    { type: 'In Progress',  count: 4 }, 
-    { type: 'In Review',    count: 1 }, 
-  ]
 
+  const student = useSelector(state => state.student.student)
+  const applications = useSelector(state => state.applications.values)
+
+  const formatApplications = applications => {
+    const stats = {
+      'Accepted': 0,
+      'Rejected': 0,
+      'In Progress': 0,
+      'In Review': 0
+    }
+    applications.forEach(application => stats[application.status] += 1)
+    return stats
+  }
   
 
   return (
     <div className="profile-page">
       
       <div className="col">
-        <PitchCard />
-        <StatsCard stats={stats} />
+        <PitchCard student={student} />
+        <StatsCard stats={ formatApplications(applications) } />
       </div>
       <div className="col">
-        <SkillsCard />
-        <PreferredCard />
+        <SkillsCard student={student} />
+        <PreferredCard student={student} />
         <SignOutCard />
       </div>
       
