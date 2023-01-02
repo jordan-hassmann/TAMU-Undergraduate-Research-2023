@@ -1,5 +1,6 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import dayjs from 'dayjs'
 import './styles.scss'
 
 
@@ -15,7 +16,7 @@ const Message = ({ message }) => {
       <div className="content">
         <div className="title">
           <h4>{ message.sender }</h4>
-          <span>{ message.timestamp }</span>
+          <span>{ dayjs(message.timestamp * 1000).format('MMM Do @ h:mm a') }</span>
         </div>
         <p>{ message.message }</p>
       </div>
@@ -28,4 +29,3 @@ export default Message
 
 
 
-{/* <span>Feb 4th @ 1:46 pm</span> */}

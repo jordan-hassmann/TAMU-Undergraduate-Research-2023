@@ -49,20 +49,7 @@ const PitchCard = ({ pitch }) => {
   )
 }
 
-const ResumeCard = ({ }) => {
-  return (
-    <div className="resume-card card">
-      <h5 className="subtitle-header">Resume</h5>
-      <div className="resume-name">
-        <p>Resume - Jordan Hassmann.pdf</p>
-        <FontAwesomeIcon icon='check' size='lg' />
-      </div>
-      <button className="upload">
-        <FontAwesomeIcon icon='arrow-up-from-bracket' size='2x' />
-      </button>
-    </div>
-  )
-}
+
 
 const SkillsCard = ({ skills }) => {
   
@@ -219,13 +206,12 @@ const ProfilePage = () => {
       
       <div className="col">
         <PitchCard />
-        <ResumeCard />
-        <SignOutCard />
+        <StatsCard stats={stats} />
       </div>
       <div className="col">
         <SkillsCard />
-        <StatsCard stats={stats} />
         <PreferredCard />
+        <SignOutCard />
       </div>
       
     </div>

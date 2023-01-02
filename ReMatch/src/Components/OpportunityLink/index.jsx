@@ -1,8 +1,11 @@
 
 import Skill from '../Skill'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
 import './styles.scss'
+
+dayjs.extend(relativeTime)
 
 
 const OpportunityLink = ({ opportunity, headline, onClick, selected }) => {
@@ -20,7 +23,7 @@ const OpportunityLink = ({ opportunity, headline, onClick, selected }) => {
         <div className="skills">
           { opportunity['required_skills'].map((skill, i) => <Skill key={`skill-${i}-${opportunity.id}`} skill={skill} />) }
         </div>
-        <p className="date">Posted { opportunity['timestamp'] }</p>
+        <p className="date">Posted { dayjs(opportunity.timestamp * 1000).fromNow() }</p>
 
       </div>
 
