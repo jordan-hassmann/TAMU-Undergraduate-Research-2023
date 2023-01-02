@@ -55,12 +55,11 @@ const HomePage = () => {
 
 
     const chatExists = chats.find(chat => chat.facultyID === selectedProject.facultyID)
+    const res = chatExists || await CreateChat(auth.currentUser.uid, selectedProject.facultyID)
 
-
-    const chatID = chatExists ? chatExists.id : await CreateChat(auth.currentUser.uid, selectedProject.facultyID).id
     const msg = {
       message, 
-      chatID,
+      chatID: res.id,
       attachmentID: '', 
       facultyID: selectedProject.facultyID, 
       studentID: auth.currentUser.uid, 

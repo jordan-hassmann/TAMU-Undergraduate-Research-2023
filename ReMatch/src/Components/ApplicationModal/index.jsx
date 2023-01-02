@@ -151,7 +151,6 @@ const ApplicationModal = ({ open, onClose, application }) => {
           <div className="options">
             <Popconfirm 
               title="Revoke this application"
-
               onConfirm={ removeApplication }
               okText="Yes"
               cancelText="No"

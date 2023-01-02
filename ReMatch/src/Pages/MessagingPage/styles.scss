@@ -45,6 +45,11 @@
   }
 
 
+  .no-chats {
+    display: grid;
+    place-items: center;
+    grid-template-rows: calc(100vh - 65px);
+  }
 
 
   .chat {

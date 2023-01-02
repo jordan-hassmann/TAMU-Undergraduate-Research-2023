@@ -1,5 +1,6 @@
 // React
 import { useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom'
 
 // Firebase
 import { SendMessage } from '../../API/Messaging';
@@ -11,7 +12,7 @@ import MessageLink from '../../Components/MessageLink';
 import Message from '../../Components/Message'
 
 // antd
-import { Input, Button, Spin } from 'antd'
+import { Input, Button, Spin, Empty } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -29,6 +30,7 @@ const { Search } = Input;
 
 const MessagingPage = () => {
 
+  const navigate = useNavigate()
   const messages = useSelector(state => state.messages.values)
   const chats = useSelector(state => state.chats.values)
   const faculty = useSelector(state => state.faculty.values)
@@ -95,55 +97,67 @@ const MessagingPage = () => {
         </div>
       </div>
 
-      <div className="chat">
-        <div className="card">
+      {
+        !chats.length
+        ? (
+          <div className="no-chats">
+            <Empty description='You have not started a chat yet'>
+              <Button type='primary' onClick={ () => navigate('/') }>Explore Projects</Button>
+            </Empty>
+          </div>
+        )
+        : (
+          <div className="chat">
+            <div className="card">
 
 
-          <div className="header">
-            <h2>{ getFacultyName(selectedChat) }</h2>
-            <div className="options">
-              <Button shape='circle' size='large' className="option">
-                <FontAwesomeIcon icon="magnifying-glass" size='lg' />
-              </Button>
-              <Button shape='circle' size='large' className="option">
-                <FontAwesomeIcon icon="ellipsis-vertical" size='lg' />
-              </Button>
+              <div className="header">
+                <h2>{ getFacultyName(selectedChat) }</h2>
+                <div className="options">
+                  <Button shape='circle' size='large' className="option">
+                    <FontAwesomeIcon icon="magnifying-glass" size='lg' />
+                  </Button>
+                  <Button shape='circle' size='large' className="option">
+                    <FontAwesomeIcon icon="ellipsis-vertical" size='lg' />
+                  </Button>
+                </div>
+              </div>
+
+
+
+              <div className="messages" ref={ chatContainer }>
+                { filterMessages(selectedChat).map(message => <Message key={ message.id } message={ message } />) }
+              </div>
+
+
+
+
+              <div className="input-container">
+                  <textarea ref={ msgRef } rows={3} placeholder='Write your message...' />
+              </div>
+
+              <div className="message-options">
+                <button className="option">
+                  <span>Attach</span>
+                  <FontAwesomeIcon icon='paperclip' size='lg' />
+                </button>
+                <button className="option" onClick={ sendMessage }>
+                  <span>Send</span>
+                  {
+                    sending 
+                    ? <Spin style={{ height: '16px', marginTop: '-8px' }} size='small' indicator={ <LoadingOutlined color='#FF0000' /> } />
+                    : <FontAwesomeIcon icon='paper-plane' size='lg' />
+                  }
+                </button>
+              </div>
+
+
+
+              
             </div>
-          </div>
-
-
-
-          <div className="messages" ref={ chatContainer }>
-            { filterMessages(selectedChat).map(message => <Message key={ message.id } message={ message } />) }
-          </div>
-
-
-
-
-          <div className="input-container">
-              <textarea ref={ msgRef } rows={3} placeholder='Write your message...' />
-          </div>
-
-          <div className="message-options">
-            <button className="option">
-              <span>Attach</span>
-              <FontAwesomeIcon icon='paperclip' size='lg' />
-            </button>
-            <button className="option" onClick={ sendMessage }>
-              <span>Send</span>
-              {
-                sending 
-                ? <Spin style={{ height: '16px', marginTop: '-8px' }} size='small' indicator={ <LoadingOutlined color='#FF0000' /> } />
-                : <FontAwesomeIcon icon='paper-plane' size='lg' />
-              }
-            </button>
-          </div>
-
-
-
-          
-        </div>
-      </div>  
+          </div>  
+        )
+      }
 
     </div>
   )
