@@ -91,6 +91,45 @@
     font-size: 16px;
     line-height: 24px;
   }
+
+
+
+  .edit-name {
+    font-size: 40px;
+    font-weight: 700;
+  }
+
+  .edit-headline {
+    font-size: 18px;
+    font-weight: 500;
+    width: 100%;
+  }
+
+  .edit-description {
+    font-size: 16px;
+    font-weight: 500;
+    height: 200px;
+    line-height: 24px;
+    resize: none;
+  }
+
+  .edit-name, 
+  .edit-headline, 
+  .edit-description {
+    border: none;
+    outline: 2px dashed #b9b9b9;
+    border-radius: 6px;
+    padding: 4px 8px;
+    transition: box-shadow 0.2s ease;
+
+    &:hover {
+      outline: 2px solid #4096ff;
+    }
+    &:focus {
+      outline: 2px solid #4096ff;
+      box-shadow: 0 0 0 6px rgba(64, 150, 255, 0.2);
+    }
+  }
 }
 
 

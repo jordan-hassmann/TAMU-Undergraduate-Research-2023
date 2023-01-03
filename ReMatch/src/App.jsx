@@ -132,7 +132,7 @@ const ContentWrapper = ({ user }) => {
 
       // Get logged in student
       const student = await getDoc(doc(db, 'Students', user.uid))
-      const studentName = student.data().firstname + ' ' + student.data().lastname
+      const studentName = student.data().name
 
       const studentQuery = query(doc(db, `Students/${user.uid}`))
       const unsubStudent = onSnapshot(studentQuery, doc => {

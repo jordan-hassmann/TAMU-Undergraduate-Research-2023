@@ -6,7 +6,7 @@ import dayjs from 'dayjs'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { LoadingOutlined } from '@ant-design/icons'
 import Skill from '../../Components/Skill'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 
 import './styles.scss'
 import { signOut } from 'firebase/auth'
@@ -22,18 +22,53 @@ import { UpdateStudent } from '../../API/Profile'
 
 
 const PitchCard = ({ student }) => {
+
+  const [editing, setEditing] = useState(false)
+  const name = useRef()
+  const headline = useRef()
+  const description = useRef()
+
+  const updatePitch = async () => {
+    const n = name.current.value
+    const h = headline.current.value 
+    const d = description.current.value
+    if (n === student.name && h === student.headline && d === student.description) return 
+    await UpdateStudent(student.id, { 
+      name: n, 
+      headline: h,
+      pitch: d
+    })
+    .catch(err => message.success('There was an error updating your information'))
+    setEditing(false)
+  }
   
-  return (
+  return editing
+  ? (
     <div className="pitch-card card">
       <h5 className='subtitle-header'>Pitch</h5>
-      <h2>{ student.firstname + ' ' + student.lastname }</h2>
+      <input ref={name} className='edit-name' defaultValue={ student.name } />
+      <div className="caption">
+        <FontAwesomeIcon icon='arrow-turn-up' style={{ transform: 'rotate(90deg)' }} size='lg' />
+        <input ref={headline} className='edit-headline' defaultValue={student.headline} />
+      </div>
+      <textarea ref={description} className='edit-description' defaultValue={ student.pitch } />
+
+      <button className="edit-fab" onClick={ updatePitch }>
+        <FontAwesomeIcon icon='check' size='xl' />
+      </button>
+    </div>
+  )
+  : (
+    <div className="pitch-card card">
+      <h5 className='subtitle-header'>Pitch</h5>
+      <h2>{ student.name }</h2>
       <div className="caption">
         <FontAwesomeIcon icon='arrow-turn-up' style={{ transform: 'rotate(90deg)' }} size='lg' />
         <p>{ student.headline }</p>
       </div>
       <p className="description">{ student.pitch }</p>
 
-      <button className="edit-fab">
+      <button className="edit-fab" onClick={ () => setEditing(true) }>
         <FontAwesomeIcon icon='pen-to-square' size='xl' />
       </button>
     </div>

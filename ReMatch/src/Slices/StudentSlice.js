@@ -3,8 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   student: {
     id: null, 
-    firstname: '',
-    lastname: '',
+    name: '',
     headline: '',
     pitch: '',
     resumeID: '',
@@ -26,8 +25,7 @@ export const studentSlice = createSlice({
     clearStudent: state => {
       state.student = {
         id: null, 
-        firstname: '',
-        lastname: '',
+        name: '',
         headline: '',
         pitch: '',
         resumeID: '',
