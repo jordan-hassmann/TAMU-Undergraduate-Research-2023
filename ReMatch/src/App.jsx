@@ -202,7 +202,7 @@ const ContentWrapper = ({ user }) => {
 
 
       // Add the unsubscribe functions 
-      unsubFunctions.push(unsubMessages, unsubChats, unsubApplications, unsubProjects)
+      unsubFunctions.push(unsubMessages, unsubChats, unsubApplications, unsubProjects, unsubStudent)
     }
 
 
