@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Modal from 'antd/es/modal/Modal'
 import Skill from '../Skill'
 import Fab from '../Fab'
+import dayjs from 'dayjs'
 import './styles.scss'
 import { useState } from 'react'
 import { RevokeApplication } from '../../API/Applications'
@@ -51,7 +52,7 @@ const ApplicationModal = ({ open, onClose, application }) => {
             <h4>{ application.project.title }</h4>
             <p className="subtitle">{ application.project.headline }</p>
             <div className="submitted">
-              { application.submitted !== null && <span>Submitted { application.submitted }</span>}
+              <span>Submitted { dayjs(application.submitted * 1000).format('MMM Do @ h:mm a') }</span>
               <FontAwesomeIcon icon='check' size='lg' />
             </div>
           </div>
