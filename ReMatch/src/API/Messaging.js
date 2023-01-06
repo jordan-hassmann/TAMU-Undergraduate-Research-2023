@@ -1,6 +1,6 @@
 
 
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, updateDoc, doc } from "firebase/firestore";
 import { db } from '../firebase'
 
 
@@ -10,6 +10,10 @@ export const CreateChat = async (studentID, facultyID) => {
     studentID,
     facultyID
   })
+}
+
+export const HideChat = async chatID => {
+  return await updateDoc(doc(db, `Chats/${chatID}`), { hide: true })
 }
 
 

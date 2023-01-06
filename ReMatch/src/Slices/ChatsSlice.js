@@ -13,6 +13,9 @@ export const chatsSlice = createSlice({
       state.values = [...state.values, ...action.payload]
       state.loaded = true
     },
+    removeChats: (state, action) => {
+      state.values = [...state.values].filter(item => !action.payload.find(chat => chat.id === item.id))
+    },
     clearChats: state => {
       state.values = []
       state.loaded = false
@@ -22,5 +25,5 @@ export const chatsSlice = createSlice({
 
 
 
-export const { addChats, clearChats } = chatsSlice.actions
+export const { addChats, clearChats, removeChats } = chatsSlice.actions
 export default chatsSlice.reducer

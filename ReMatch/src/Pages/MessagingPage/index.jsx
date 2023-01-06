@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom'
 
 // Firebase
-import { SendMessage } from '../../API/Messaging';
+import { HideChat, SendMessage } from '../../API/Messaging';
 import { auth } from '../../firebase';
 import { Timestamp } from 'firebase/firestore';
 
@@ -12,7 +12,7 @@ import MessageLink from '../../Components/MessageLink';
 import Message from '../../Components/Message'
 
 // antd
-import { Input, Button, Spin, Empty } from 'antd'
+import { Input, Button, Spin, Empty, Popover, Dropdown, Tooltip } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -36,11 +36,22 @@ const MessagingPage = () => {
   const faculty = useSelector(state => state.faculty.values)
   const msgRef = useRef()
   const chatContainer = useRef()
-  const onSearch = () => {}
 
   const [selectedChat, setSelectedChat] = useState(0)
   const [sending, setSending] = useState(false)
-
+  const [search, setSearch] = useState('')
+  const menu = [
+    {
+      key: '1', 
+      label: (
+        <Tooltip title="Removing this chat won't remove it for the faculty" placement='bottomLeft'>
+          <a onClick={ hideChat }>Remove Chat</a>
+        </Tooltip>
+      ),
+      icon: <FontAwesomeIcon icon='close' />,
+      danger: true,
+    }
+  ]
 
 
   const getFacultyName = chatIndex => {
@@ -76,16 +87,25 @@ const MessagingPage = () => {
     chatContainer.current.scrollTop = chatContainer.current.scrollHeight
   }
 
+  function filterChats() {
+    return chats.filter(chat => !chat.hide && faculty[chat.facultyID].name.toLowerCase().includes(search.toLowerCase()))
+  }
+
+  async function hideChat() {
+    await HideChat(chats[selectedChat].id)
+    setSelectedChat(0)
+  }
+
 
   return (
     <div className="messaging-page">
       
       <div className="message-drawer">
         <div className="search">
-          <Search placeholder="Search" onSearch={onSearch} />
+          <Search placeholder="Search" onChange={ e => setSearch(e.target.value) } />
         </div>
         <div className="messages">
-          { chats.map((chat, i) => (
+          { filterChats().map((chat, i) => (
               <MessageLink 
                 key={ chat.id } 
                 message={ filterMessages(i).at(-1) ? filterMessages(i).at(-1).message : '' } 
@@ -114,12 +134,11 @@ const MessagingPage = () => {
               <div className="header">
                 <h2>{ getFacultyName(selectedChat) }</h2>
                 <div className="options">
-                  <Button shape='circle' size='large' className="option">
-                    <FontAwesomeIcon icon="magnifying-glass" size='lg' />
-                  </Button>
-                  <Button shape='circle' size='large' className="option">
-                    <FontAwesomeIcon icon="ellipsis-vertical" size='lg' />
-                  </Button>
+                  <Dropdown menu={{ items: menu }} trigger='click'>
+                    <Button shape='circle' size='large' className="option">
+                      <FontAwesomeIcon icon="ellipsis-vertical" size='lg' />
+                    </Button>
+                  </Dropdown>
                 </div>
               </div>
 

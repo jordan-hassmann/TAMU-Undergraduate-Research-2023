@@ -25,7 +25,7 @@ import './App.scss'
 // Firebase
 import { onSnapshot, collection, doc, query, where, getDocs, getDoc, orderBy } from 'firebase/firestore'
 import { addMessages } from './Slices/MessagesSlice'
-import { addChats } from './Slices/ChatsSlice'
+import { addChats, removeChats } from './Slices/ChatsSlice'
 import { updateStudent } from './Slices/StudentSlice'
 import { addApplications, removeApplications } from './Slices/ApplicationsSlice'
 import { addFaculty } from './Slices/FacultySlice'
@@ -155,14 +155,20 @@ const ContentWrapper = ({ user }) => {
 
 
       // Listen to chat updates for current student
-      const chatsQuery = query(collection(db, 'Chats'), where('studentID', '==', user.uid))
+      const chatsQuery = query(collection(db, 'Chats'), where('studentID', '==', user.uid), where('hide', '==', false))
       const unsubChats = onSnapshot(chatsQuery, snapshot => {
 
-        const docs = snapshot.docChanges().map(change => ({ 
+        const added = snapshot.docChanges().filter(change => change.type === 'added').map(change => ({
           ...change.doc.data(), 
-          id: change.doc.id, 
+          id: change.doc.id
         }))
-        dispatch(addChats(docs))
+        const removed = snapshot.docChanges().filter(change => change.type === 'removed').map(change => ({
+          ...change.doc.data(),
+          id: change.doc.id
+        }))
+
+        dispatch(addChats(added))
+        dispatch(removeChats(removed))
 
       })
 
