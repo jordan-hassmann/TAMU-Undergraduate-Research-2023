@@ -24,8 +24,8 @@ const ApplicationsPage = () => {
 
   const [selectedApplication, setSelectedApplication] = useState(null)
   const [filters, setFilters] = useState([])
+  const [search, setSearch] = useState('')
   const [open, setOpen] = useState(false);
-  const [modal, setModal] = useState(false);
   const [items, setItems] = useState({
     'Accepted': { 
       key: 0,
@@ -89,6 +89,12 @@ const ApplicationsPage = () => {
     })
   }
 
+  function filteredApplications() {
+    const searchFiltered = applications.filter(app => projects.find(p => p.id === app.projectID).title.toLowerCase().includes(search.toLowerCase()))
+    let selectedFilters = Object.entries(items).filter(entry => entry[1].icon).map(entry => entry[0]) 
+    return selectedFilters.length ? searchFiltered.filter(value => selectedFilters.includes(value.status)) : searchFiltered
+  }
+
 
 
   return (
@@ -111,7 +117,7 @@ const ApplicationsPage = () => {
           </div>
 
 
-          <Input.Search placeholder='Search' className='search' style={{ width: 300 }} />
+          <Input.Search placeholder='Search' onChange={ e => setSearch(e.target.value) } className='search' style={{ width: 300 }} />
         </div>
 
 
@@ -130,7 +136,7 @@ const ApplicationsPage = () => {
           )
           : (
             <div className="applications">
-              { applications.map(application => (
+              { filteredApplications().map(application => (
                 <ApplicationCard 
                   status={ application.status }
                   onOpen={ () => selectApplication(application) }
