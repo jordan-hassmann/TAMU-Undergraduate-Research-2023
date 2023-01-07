@@ -16,7 +16,7 @@ import './styles.scss'
 import FilterModal from '../../Components/FilterModal';
 
 // Firebase
-import { CreateChat, SendMessage } from '../../API/Messaging';
+import { CreateChat, SendMessage, UnhideChat } from '../../API/Messaging';
 import { Timestamp } from 'firebase/firestore';
 import { auth } from '../../firebase';
 
@@ -68,7 +68,7 @@ const HomePage = () => {
       timestamp: Timestamp.now()
     }
 
-
+    if (res.hide) await UnhideChat(res.id)
     await SendMessage(msg)
     msgRef.current.value = ''
     setSentSuccess(true)
