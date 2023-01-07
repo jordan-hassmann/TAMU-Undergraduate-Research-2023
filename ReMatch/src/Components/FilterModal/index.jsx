@@ -9,7 +9,23 @@ import './styles.scss'
 
 
 
-const FilterModal = ({ open, onClose }) => {
+const FilterModal = ({ 
+  open, 
+  clear,
+  onClose, 
+  onCategoryChange, 
+  onLocationChange, 
+  onTeamChange, 
+  onPaidChange, 
+  onFieldsChange,
+  onSkillsChange,
+  categories, 
+  location, 
+  team, 
+  paid,
+  fields,
+  skills,
+}) => {
 
   const options = {
     category: ['Research Position', 'Symposium', 'Program', 'Funding', 'Conference', 'Publication'],
@@ -41,13 +57,41 @@ const FilterModal = ({ open, onClose }) => {
           <div className="col">
 
             <h5>Category</h5>
-            <Checkbox.Group options={ options.category }  />
+            <Checkbox.Group options={ options.category } value={ categories } onChange={ onCategoryChange } />
 
             <h5>Field of Study</h5>
-            <AutoComplete />
+            <Select
+              style={{ width: 300 }}
+              allowClear
+              mode='multiple'
+              onChange={ onFieldsChange }
+              value={ fields }
+              options={[
+                { value: 'CSCE' }, 
+                { value: 'COMP' }, 
+                { value: 'CHEN' }, 
+                { value: 'PSYC' }, 
+                { value: 'BIMS' }, 
+                { value: 'ESET' }, 
+
+              ]}
+            />
 
             <h5>Related Skills</h5>
-            <AutoComplete />
+            <Select
+              style={{ width: 300 }}
+              allowClear
+              onChange={ onSkillsChange}
+              mode='multiple'
+              value={ skills }
+              options={[
+                { value: 'Python' }, 
+                { value: 'JavaScript' }, 
+                { value: 'R' }, 
+                { value: 'Java' }, 
+                { value: 'Scala' }, 
+              ]}
+            />
 
           </div>
 
@@ -55,13 +99,13 @@ const FilterModal = ({ open, onClose }) => {
           <div className="col">
 
             <h5>Location</h5>
-            <Checkbox.Group options={ options.location } />
+            <Checkbox.Group options={ options.location } value={ location } onChange={ onLocationChange } />
 
             <h5>Team</h5>
-            <Checkbox.Group options={ options.team } />
+            <Checkbox.Group options={ options.team } value={ team } onChange={ onTeamChange } />
 
             <h5>Paid</h5>
-            <Checkbox.Group options={ options.paid } />
+            <Checkbox.Group options={ options.paid } value={ paid } onChange={ onPaidChange } />
 
             <div className="help">
               <h5>Favorited</h5>
@@ -93,7 +137,7 @@ const FilterModal = ({ open, onClose }) => {
 
 
         <div className="options">
-          <button className="clear">Clear</button>
+          <button className="clear" onClick={ clear }>Clear</button>
           <button className="save">Save</button>
         </div>
 

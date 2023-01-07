@@ -26,7 +26,9 @@ const { Search } = Input;
 
 
 
-
+function intersection(arr1, arr2) {
+  return arr1.filter(value => arr2.includes(value))
+}
 
 
 
@@ -44,6 +46,14 @@ const HomePage = () => {
   const [selectedProject, setSelectedProject] = useState(null);
   const [messenger, setMessenger] = useState(false);
   const [sentSuccess, setSentSuccess] = useState(false)
+  const [search, setSearch] = useState('')
+
+  const [categories, setCategories] = useState([])
+  const [location, setLocation] = useState([])
+  const [team, setTeam] = useState([])
+  const [paid, setPaid] = useState([])
+  const [fields, setFields] = useState([])
+  const [skills, setSkills] = useState([])
   const msgRef = useRef()
   
 
@@ -89,20 +99,39 @@ const HomePage = () => {
     else setSelectedProject(null) 
   }
 
+
+  function clearFilters() {
+    [setCategories, setLocation, setTeam, setPaid].forEach(func => func([]))
+  }
+
+
+  function filteredProjects() {
+    let filtered = projects
+    filtered = !search.length      ? filtered : filtered.filter(project => project.title.includes(search))
+    filtered = !location.length    ? filtered : filtered.filter(project => location.includes(project.location))
+    filtered = !paid.length        ? filtered : filtered.filter(project => paid.includes(project.paid ? 'Paid' : 'Unpaid'))
+    filtered = !team.length        ? filtered : filtered.filter(project => team.includes(project.team ? 'Team Project' : 'Individual Project'))
+    filtered = !categories.length  ? filtered : filtered.filter(project => intersection(project.categories, categories).length)
+    filtered = !fields.length      ? filtered : filtered.filter(project => intersection(project.fields, fields).length)
+    filtered = !skills.length      ? filtered : filtered.filter(project => intersection(project.required_skills, skills).length)
+    return filtered
+  }
+
+
  
   return (
     <div className="home-page">
       
       <div className="opportunity-drawer">
         <div className="search">
-          <Search placeholder="Search" onSearch={onSearch} />
+          <Search placeholder="Search" onChange={ e => setSearch(e.target.value) } />
           <button className="filters" onClick={ () => setOpenFilters(true) }>
             <span>Filters</span>
             <FontAwesomeIcon icon='sliders' />
           </button>
         </div>
         <div className="opportunities">
-          { projects.map(project => (
+          { filteredProjects().map(project => (
             <OpportunityLink 
               opportunity={project} 
               headline={ getHeadline(project) } 
@@ -217,7 +246,23 @@ const HomePage = () => {
         }
       </div>  
 
-      <FilterModal open={ openFilters } onClose={ () => setOpenFilters(false) } />
+      <FilterModal 
+        open={ openFilters } 
+        clear={ clearFilters }
+        onClose={ () => setOpenFilters(false) } 
+        onCategoryChange={ val => setCategories(val)}
+        onLocationChange={ val => setLocation(val) }
+        onTeamChange={ val => setTeam(val) }
+        onPaidChange={ val => setPaid(val) }
+        onFieldsChange={ val => setFields(val) }
+        onSkillsChange={ val => setSkills(val) }
+        categories={categories}
+        location={location}
+        team={team}
+        paid={paid}
+        fields={fields}
+        skills={skills}
+      />
       <ApplyModal open={ openApply } project={ selectedProject } onClose={ () => setOpenApply(false) } />
     </div>
   )
