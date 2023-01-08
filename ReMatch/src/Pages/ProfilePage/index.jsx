@@ -1,24 +1,34 @@
+// React 
+import { useState, useRef } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { DatePicker, Input, InputNumber, message, Spin, Tooltip } from 'antd'
-import dayjs from 'dayjs'
+// Components
+import Skill from '../../Components/Skill'
+
+// Firebase
+import { signOut } from 'firebase/auth'
+import { UpdateStudent } from '../../API/Profile'
+import { auth } from '../../firebase'
 
 // Styles
+import { DatePicker, message, Spin, Tooltip } from 'antd'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { LoadingOutlined } from '@ant-design/icons'
-import Skill from '../../Components/Skill'
-import { useState, useRef } from 'react'
-
 import './styles.scss'
-import { signOut } from 'firebase/auth'
-import { auth } from '../../firebase'
-import { useDispatch, useSelector } from 'react-redux'
+
+// Misc
+import dayjs from 'dayjs'
 import { clearChats } from '../../Slices/ChatsSlice'
 import { clearStudent } from '../../Slices/StudentSlice'
 import { clearFaculty } from '../../Slices/FacultySlice'
 import { clearApplications } from '../../Slices/ApplicationsSlice'
 import { clearMessages } from '../../Slices/MessagesSlice'
 import { clearProjects } from '../../Slices/ProjectsSlice'
-import { UpdateStudent } from '../../API/Profile'
+
+
+
+
+
 
 
 const PitchCard = ({ student }) => {
@@ -28,7 +38,11 @@ const PitchCard = ({ student }) => {
   const headline = useRef()
   const description = useRef()
 
-  const updatePitch = async () => {
+
+
+
+
+  async function updatePitch() {
     const n = name.current.value
     const h = headline.current.value 
     const d = description.current.value
@@ -41,7 +55,12 @@ const PitchCard = ({ student }) => {
     .catch(err => message.success('There was an error updating your information'))
     setEditing(false)
   }
+
+
   
+
+
+
   return editing
   ? (
     <div className="pitch-card card">
@@ -77,13 +96,16 @@ const PitchCard = ({ student }) => {
 
 
 
+
 const SkillsCard = ({ student }) => {
 
 
   const [toDelete, setToDelete] = useState([])
   const [deleting, setDeleting] = useState(false)
 
-  const select = (e, skill) => {
+
+
+  function select(e, skill) {
     if (!deleting) return 
     
     if (toDelete.includes(skill)) {
@@ -93,10 +115,9 @@ const SkillsCard = ({ student }) => {
       setToDelete(prev => [...prev, skill])
       e.target.classList.add('selected')
     }
-    
   }
 
-  const removeSkills = async () => {
+  async function removeSkills() {
     if (!toDelete.length) return 
 
     await UpdateStudent(student.id, { skills: student.skills.filter(value => !toDelete.includes(value)) })
@@ -106,7 +127,7 @@ const SkillsCard = ({ student }) => {
     setDeleting(false)
   }
 
-  const addSkill = async e => {
+  async function addSkill(e) {
     const newSkill = e.target.value
     if (e.key !== 'Enter') return
     if (student.skills.includes(newSkill)) return 
@@ -114,6 +135,10 @@ const SkillsCard = ({ student }) => {
     await UpdateStudent(student.id, { skills: [...student.skills, newSkill]})
     .catch(err => message.error('There was an issue updating your skills'))
   }
+
+
+
+
   
   return (
     <div className="skills-card card">
@@ -158,6 +183,9 @@ const SkillsCard = ({ student }) => {
   )
 }
 
+
+
+
 const StatCard = ({ count, type }) => {
   const colors = {
     'Accepted': '#3ACC37',
@@ -174,6 +202,9 @@ const StatCard = ({ count, type }) => {
   )
 }
 
+
+
+
 const StatsCard = ({ stats }) => {
 
   return (
@@ -187,29 +218,27 @@ const StatsCard = ({ stats }) => {
 }
 
 
+
+
 const PreferredCard = ({ student }) => {
 
   
-
-  const updateDuration = async duration => {
+  async function updateDuration(duration) {
     await UpdateStudent(student.id, { duration: duration ? duration.map(val => val.unix() * 1000) : [null, null] })
     .catch(err => message.error('There was an error updating your preferred duration'))
   }
 
-  const updatePay = async val => {
+  async function updatePay(val) {
     if (val === student.pay) return
     await UpdateStudent(student.id, { pay: val })
     .catch(err => message.error('There was an error updating your preferred pay'))
   }
 
-  const updateMinPay = async e => {
+  async function updateMinPay(e) {
     if (e.target.value === student.minPay) return
     await UpdateStudent(student.id, { minPay: e.target.value })
     .catch(err => message.error('There was an error updating your preferred min pay'))
   }
-
-
-
 
 
 
@@ -271,11 +300,16 @@ const PreferredCard = ({ student }) => {
 }
 
 
+
+
 const SignOutCard = () => {
   const [loading, setLoading] = useState(false)
   const dispatch = useDispatch()
 
-  const logout = () => {
+
+
+
+  function logout() {
     setLoading(true)
     signOut(auth)
     .then(() => {
@@ -286,6 +320,9 @@ const SignOutCard = () => {
       actions.forEach(action => dispatch(action()))
     })
   }
+
+
+
 
   return (
     <div className="signout-card card">
@@ -301,13 +338,17 @@ const SignOutCard = () => {
 
 
 
+
+
 const ProfilePage = () => {
 
 
   const student = useSelector(state => state.student.student)
   const applications = useSelector(state => state.applications.values)
 
-  const formatApplications = applications => {
+  
+
+  function formatApplications(applications) {
     const stats = {
       'Accepted': 0,
       'Rejected': 0,
@@ -318,6 +359,8 @@ const ProfilePage = () => {
     return stats
   }
   
+
+
 
   return (
     <div className="profile-page">
