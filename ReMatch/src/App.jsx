@@ -1,7 +1,7 @@
+// React
 import { Route, Routes, Outlet, useNavigate } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-
 
 // Pages
 import LoginPage from './Pages/LoginPage'
@@ -10,14 +10,10 @@ import LoadingData from './Components/LoadingData'
 import Navbar from './Components/Navbar'
 import HomePage from './Pages/HomePage'
 import PageNotFound from './Components/PageNotFound'
-import Error404 from './Pages/404'
 import ApplicationsPage from './Pages/ApplicationsPage'
 import MessagingPage from './Pages/MessagingPage'
 import ProfilePage from './Pages/ProfilePage'
 import { ProtectedRoute } from './Components/ProtectedRoute'
-
-import { auth, db } from './firebase'
-import { useAuthState } from 'react-firebase-hooks/auth'
 
 // Styles
 import './App.scss'
@@ -30,6 +26,8 @@ import { updateStudent } from './Slices/StudentSlice'
 import { addApplications, removeApplications } from './Slices/ApplicationsSlice'
 import { addFaculty } from './Slices/FacultySlice'
 import { addProjects } from './Slices/ProjectsSlice'
+import { auth, db } from './firebase'
+import { useAuthState } from 'react-firebase-hooks/auth'
 
 
 // Iconography
@@ -288,7 +286,6 @@ function App() {
 
 
           {/* -=-=- Default Route -=-=- */}
-          <Route path='/404' element={ <Error404 /> } />
           <Route path='*' element={ <PageNotFound /> } />
         </Route>
 
