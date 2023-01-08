@@ -18,8 +18,6 @@ const MessageLink = ({ message, faculty, onClick, selected }) => {
       </div>
 
       <div className="symbol">
-        <FontAwesomeIcon color='#18A0FB' size='2xs' icon='circle' />
-        {/* <FontAwesomeIcon color='#18A0FB' size='xs' icon='chevron-right' /> */}
       </div>
     </div>
   )
