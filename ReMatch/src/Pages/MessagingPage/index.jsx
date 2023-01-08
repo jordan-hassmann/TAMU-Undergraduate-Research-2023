@@ -1,27 +1,26 @@
 // React
-import { useEffect, useState, useRef } from 'react';
+import { useState, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
+
+// Components
+import MessageLink from '../../Components/MessageLink';
+import Message from '../../Components/Message'
 
 // Firebase
 import { HideChat, SendMessage } from '../../API/Messaging';
 import { auth } from '../../firebase';
 import { Timestamp } from 'firebase/firestore';
 
-// Components
-import MessageLink from '../../Components/MessageLink';
-import Message from '../../Components/Message'
 
-// antd
-import { Input, Button, Spin, Empty, Popover, Dropdown, Tooltip } from 'antd'
-import { LoadingOutlined } from '@ant-design/icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Styles
+import { Input, Button, Spin, Empty, Dropdown, Tooltip } from 'antd'
+import { LoadingOutlined } from '@ant-design/icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './styles.scss'
-import { useSelector } from 'react-redux';
 
 
-const { Search } = Input;
 
 
 
@@ -54,16 +53,21 @@ const MessagingPage = () => {
   ]
 
 
-  const getFacultyName = chatIndex => {
-    const f = faculty[chats[chatIndex].facultyID]
-    return f.firstname + ' ' + f.lastname
+
+
+  function getFacultyName(chatIndex) {
+    return faculty[chats[chatIndex].facultyID].name
   }
 
-  const filterMessages = chatIndex => {
+  function filterMessages(chatIndex) {
     return messages.filter(msg => msg.chatID === chats[chatIndex].id)
   }
 
-  const sendMessage = async () => {
+  function filterChats() {
+    return chats.filter(chat => !chat.hide && faculty[chat.facultyID].name.toLowerCase().includes(search.toLowerCase()))
+  }
+
+  async function sendMessage() {
     const message = msgRef.current.value
     if (!message) return 
     setSending(true)
@@ -87,14 +91,14 @@ const MessagingPage = () => {
     chatContainer.current.scrollTop = chatContainer.current.scrollHeight
   }
 
-  function filterChats() {
-    return chats.filter(chat => !chat.hide && faculty[chat.facultyID].name.toLowerCase().includes(search.toLowerCase()))
-  }
-
   async function hideChat() {
     await HideChat(chats[selectedChat].id)
     setSelectedChat(0)
   }
+
+
+
+
 
 
   return (
@@ -102,7 +106,7 @@ const MessagingPage = () => {
       
       <div className="message-drawer">
         <div className="search">
-          <Search placeholder="Search" onChange={ e => setSearch(e.target.value) } />
+          <Input.Search placeholder="Search" onChange={ e => setSearch(e.target.value) } />
         </div>
         <div className="messages">
           { filterChats().map((chat, i) => (
