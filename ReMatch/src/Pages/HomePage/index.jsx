@@ -17,6 +17,7 @@ import FilterModal from '../../Components/FilterModal';
 
 // Firebase
 import { CreateChat, SendMessage, UnhideChat } from '../../API/Messaging';
+import { UpdateStudent } from '../../API/Profile'
 import { Timestamp } from 'firebase/firestore';
 import { auth } from '../../firebase';
 
@@ -34,11 +35,11 @@ function intersection(arr1, arr2) {
 
 const HomePage = () => {
 
-  const onSearch = () => {}
   const projects = useSelector(state => state.projects.values)
   const chats = useSelector(state => state.chats.values)
   const faculty = useSelector(state => state.faculty.values)
   const applications = useSelector(state => state.applications.values)
+  const student = useSelector(state => state.student.student)
 
   const [openFilters, setOpenFilters] = useState(false)
   const [openApply, setOpenApply] = useState(false)
@@ -47,6 +48,7 @@ const HomePage = () => {
   const [messenger, setMessenger] = useState(false);
   const [sentSuccess, setSentSuccess] = useState(false)
   const [search, setSearch] = useState('')
+  const [liking, setLiking] = useState(false)
 
   const [categories, setCategories] = useState([])
   const [location, setLocation] = useState([])
@@ -54,6 +56,7 @@ const HomePage = () => {
   const [paid, setPaid] = useState([])
   const [fields, setFields] = useState([])
   const [skills, setSkills] = useState([])
+  const [favorite, setFavorite] = useState('All')
   const msgRef = useRef()
   
 
@@ -99,6 +102,20 @@ const HomePage = () => {
     else setSelectedProject(null) 
   }
 
+  async function toggleFavorite() {
+    if (liking) return
+    setLiking(true)
+
+    const favorites = student.favorites.includes(selectedProject.id)
+    ? student.favorites.filter(id => id !== selectedProject.id)
+    : [...student.favorites, selectedProject.id]
+
+    await UpdateStudent(student.id, { favorites })
+
+    setLiking(false)
+    if (favorite === 'Favorited') setSelectedProject(null)
+  }
+
 
   function clearFilters() {
     [setCategories, setLocation, setTeam, setPaid].forEach(func => func([]))
@@ -114,6 +131,7 @@ const HomePage = () => {
     filtered = !categories.length  ? filtered : filtered.filter(project => intersection(project.categories, categories).length)
     filtered = !fields.length      ? filtered : filtered.filter(project => intersection(project.fields, fields).length)
     filtered = !skills.length      ? filtered : filtered.filter(project => intersection(project.required_skills, skills).length)
+    filtered = favorite === 'All'  ? filtered : filtered.filter(project => student.favorites.includes(project.id))
     return filtered
   }
 
@@ -200,7 +218,12 @@ const HomePage = () => {
                   </button>
                 </Popover>
                   
-                <FontAwesomeIcon className='star' icon='star' size='2x' />
+                <FontAwesomeIcon 
+                  className={`star ${ student.favorites.includes(selectedProject.id) }`} 
+                  icon='star' 
+                  size='2x' 
+                  onClick={ toggleFavorite }
+                />
               </div>
             </div>
 
@@ -256,12 +279,14 @@ const HomePage = () => {
         onPaidChange={ val => setPaid(val) }
         onFieldsChange={ val => setFields(val) }
         onSkillsChange={ val => setSkills(val) }
+        onFavoriteChange={ val => setFavorite(val) }
         categories={categories}
         location={location}
         team={team}
         paid={paid}
         fields={fields}
         skills={skills}
+        favorite={favorite}
       />
       <ApplyModal open={ openApply } project={ selectedProject } onClose={ () => setOpenApply(false) } />
     </div>

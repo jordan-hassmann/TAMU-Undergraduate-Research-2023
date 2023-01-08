@@ -19,12 +19,14 @@ const FilterModal = ({
   onPaidChange, 
   onFieldsChange,
   onSkillsChange,
+  onFavoriteChange,
   categories, 
   location, 
   team, 
   paid,
   fields,
   skills,
+  favorite,
 }) => {
 
   const options = {
@@ -127,6 +129,8 @@ const FilterModal = ({
                   icon: <FontAwesomeIcon icon='star' style={{ marginRight: 6}} />,
                 },
               ]}
+              value={ favorite }
+              onChange={ onFavoriteChange }
             />
 
           </div>

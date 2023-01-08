@@ -187,8 +187,9 @@
       .options .star {
         color: rgba(0, 0, 0, 0.2);
         cursor: pointer;
+        transition: color 0.2s ease;
       }
-      .options .star.active {
+      .options .star.true {
         color: #ffe600;
       }
 

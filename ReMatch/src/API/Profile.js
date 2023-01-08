@@ -1,7 +1,7 @@
 
 
-import { addDoc, collection, deleteDoc, doc, updateDoc } from "firebase/firestore";
-import { db, storage } from '../firebase'
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from '../firebase'
 
 
 
