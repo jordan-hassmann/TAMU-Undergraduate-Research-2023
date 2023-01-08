@@ -1,15 +1,15 @@
 // React 
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { EmailAuthCredential, signInWithEmailAndPassword } from 'firebase/auth';
+
+// Firebase
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase';
 
-// antd
+// Styles
 import { Input, Space, Spin } from 'antd'
 import { EyeInvisibleOutlined, EyeOutlined, LoadingOutlined } from '@ant-design/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
-// Styles
 import './styles.scss'
 
 
@@ -37,7 +37,7 @@ const LoginPage = () => {
   const [loading, setLoading] = useState(false)
 
 
-  const login = e => {
+  function login(e) {
     e.preventDefault()
     if (loading) return 
 
@@ -47,13 +47,14 @@ const LoginPage = () => {
     : signInWithEmailAndPassword(auth, email, password)
       .catch(err => { setError(true); console.log(err)})
       .finally(() => setLoading(false))
-  } 
+  }
 
-  const updateEmail = e => {
+  function updateEmail(e) {
     setError(false)
     setEmail(e.target.value)
   }
-  const updatePassword = e => {
+  
+  function updatePassword(e) {
     setError(false)
     setPassword(e.target.value)
   }
