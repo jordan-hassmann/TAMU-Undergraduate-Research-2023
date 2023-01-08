@@ -3,12 +3,14 @@ import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Input, Dropdown, Empty, Button } from 'antd'
+// Components 
 import FilterChip from '../../Components/FilterChip'
 import ApplicationCard from '../../Components/ApplicationCard'
 import ApplicationModal from '../../Components/ApplicationModal'
 
+// Styling
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Input, Dropdown, Empty, Button } from 'antd'
 import './styles.scss'
 
 
@@ -23,10 +25,9 @@ const ApplicationsPage = () => {
   const projects = useSelector(state => state.projects.values)
 
   const [selectedApplication, setSelectedApplication] = useState(null)
-  const [filters, setFilters] = useState([])
   const [search, setSearch] = useState('')
   const [open, setOpen] = useState(false);
-  const [items, setItems] = useState({
+  const [filters, setFilters] = useState({
     'Accepted': { 
       key: 0,
       filter: 'Accepted',
@@ -55,30 +56,23 @@ const ApplicationsPage = () => {
 
 
 
-  const toggleFilter = filter => {
-    setItems(prev => {
+
+
+
+
+  function toggleFilter(filter) {
+    setFilters(prev => {
       prev[filter].icon = prev[filter].icon ? null : <FontAwesomeIcon icon='check' color='#3ACC37' />
       return {...prev}
     })
   }
 
-  const getFaculty = application => {
+  function getHeadline(application) {
     const f = faculty[application.facultyID]
-    return f.firstname + ' ' + f.lastname
+    return f.name + ' - ' + f.headline
   }
 
-  const getHeadline = application => {
-    const f = faculty[application.facultyID]
-    return f.firstname + ' ' + f.lastname + ' - ' + f.headline
-  }
-
-  const getTitle = application => {
-    const project = projects.find(p => p.id === application.projectID)
-    return project.title
-  }
-
-  const selectApplication = application => {
-
+  function selectApplication(application) {
     const project = projects.find(p => p.id === application.projectID)
     setSelectedApplication({ 
       ...application, 
@@ -91,11 +85,14 @@ const ApplicationsPage = () => {
 
   function filteredApplications() {
     const searchFiltered = applications.filter(app => projects.find(p => p.id === app.projectID).title.toLowerCase().includes(search.toLowerCase()))
-    let selectedFilters = Object.entries(items).filter(entry => entry[1].icon).map(entry => entry[0]) 
+    let selectedFilters = Object.entries(filters).filter(entry => entry[1].icon).map(entry => entry[0]) 
     return selectedFilters.length ? searchFiltered.filter(value => selectedFilters.includes(value.status)) : searchFiltered
   }
 
 
+
+
+  
 
   return (
     <div className="applications-page">
@@ -103,7 +100,7 @@ const ApplicationsPage = () => {
       <div className="container">
         <div className="options">
 
-          <Dropdown open={ open } menu={{ items: Object.values(items) }} trigger={['click']}>
+          <Dropdown open={ open } menu={{ items: Object.values(filters) }} trigger={['click']}>
             <button onClick={ () => setOpen(prev => !prev) } className='filter-button'>
               <span>Filters</span>
               { open ? <FontAwesomeIcon icon='chevron-up' size='xs' /> : <FontAwesomeIcon icon='plus-minus' />}
@@ -111,7 +108,7 @@ const ApplicationsPage = () => {
           </Dropdown>
 
           <div className="filters">
-            { Object.values(items).filter(({icon}) => icon).map(item => {
+            { Object.values(filters).filter(({icon}) => icon).map(item => {
               return <FilterChip onClick={ () => toggleFilter(item.filter) } filter={item.filter} key={item.filter} />
             } )}
           </div>
@@ -140,8 +137,8 @@ const ApplicationsPage = () => {
                 <ApplicationCard 
                   status={ application.status }
                   onOpen={ () => selectApplication(application) }
-                  title={ getTitle(application) } 
-                  faculty={ getFaculty(application) }
+                  title={ projects.find(p => p.id === application.projectID).title } 
+                  faculty={ faculty[application.facultyID].name }
                   key={ application.id } 
                 />
               ) )}
