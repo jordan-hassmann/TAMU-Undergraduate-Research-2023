@@ -1,18 +1,11 @@
-
+// React
 import { useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 
+// Components
 import ApplyModal from '../../Components/ApplyModal';
 import OpportunityLink from '../../Components/OpportunityLink';
 import Skill from '../../Components/Skill';
-
-// antd
-import { Input, Popover, Spin } from 'antd'
-import { LoadingOutlined } from '@ant-design/icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-// Styles
-import './styles.scss'
 import FilterModal from '../../Components/FilterModal';
 
 // Firebase
@@ -21,15 +14,17 @@ import { UpdateStudent } from '../../API/Profile'
 import { Timestamp } from 'firebase/firestore';
 import { auth } from '../../firebase';
 
+// Styling
+import { Input, Popover, Spin } from 'antd'
+import { LoadingOutlined } from '@ant-design/icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import './styles.scss'
 
-const { Search } = Input;
 
 
 
 
-function intersection(arr1, arr2) {
-  return arr1.filter(value => arr2.includes(value))
-}
+
 
 
 
@@ -40,6 +35,7 @@ const HomePage = () => {
   const faculty = useSelector(state => state.faculty.values)
   const applications = useSelector(state => state.applications.values)
   const student = useSelector(state => state.student.student)
+  const msgRef = useRef()
 
   const [openFilters, setOpenFilters] = useState(false)
   const [openApply, setOpenApply] = useState(false)
@@ -50,18 +46,76 @@ const HomePage = () => {
   const [search, setSearch] = useState('')
   const [liking, setLiking] = useState(false)
 
-  const [categories, setCategories] = useState([])
-  const [location, setLocation] = useState([])
-  const [team, setTeam] = useState([])
-  const [paid, setPaid] = useState([])
-  const [fields, setFields] = useState([])
-  const [skills, setSkills] = useState([])
-  const [favorite, setFavorite] = useState('All')
-  const msgRef = useRef()
+  const [filters, setFilters] = useState({
+    categories: [],
+    location: [], 
+    team: [], 
+    paid: [], 
+    fields: [],
+    skills: [],
+    favorite: 'All', 
+  })
+
   
 
 
-  const sendMessage = async () => {
+
+  
+
+  function getHeadline(project) {
+    const f = faculty[project.facultyID]
+    return f.name + ' - ' + f.headline
+  }
+
+  function updateSelectedProject(project) {
+    !selectedProject || project.id !== selectedProject.id
+    ? setSelectedProject(project)
+    : setSelectedProject(null)
+  }
+
+  function clearFilters() {
+    setFilters({
+      categories: [],
+      location: [], 
+      team: [], 
+      paid: [], 
+      fields: [],
+      skills: [],
+      favorite: 'All'
+    })
+  }
+
+  function filteredProjects() {
+    const intersection = (arr1, arr2) => arr1.filter(value => arr2.includes(value))
+    const { categories, location, team, paid, fields, skills, favorite } = filters
+    let filtered = projects
+
+    filtered = !search.length      ? filtered : filtered.filter(project => project.title.includes(search))
+    filtered = !location.length    ? filtered : filtered.filter(project => location.includes(project.location))
+    filtered = !paid.length        ? filtered : filtered.filter(project => paid.includes(project.paid ? 'Paid' : 'Unpaid'))
+    filtered = !team.length        ? filtered : filtered.filter(project => team.includes(project.team ? 'Team Project' : 'Individual Project'))
+    filtered = !categories.length  ? filtered : filtered.filter(project => intersection(project.categories, categories).length)
+    filtered = !fields.length      ? filtered : filtered.filter(project => intersection(project.fields, fields).length)
+    filtered = !skills.length      ? filtered : filtered.filter(project => intersection(project.required_skills, skills).length)
+    filtered = favorite === 'All'  ? filtered : filtered.filter(project => student.favorites.includes(project.id))
+    return filtered
+  }
+
+  async function toggleFavorite() {
+    if (liking) return
+    setLiking(true)
+
+    const favorites = student.favorites.includes(selectedProject.id)
+    ? student.favorites.filter(id => id !== selectedProject.id)
+    : [...student.favorites, selectedProject.id]
+
+    await UpdateStudent(student.id, { favorites })
+
+    setLiking(false)
+    if (favorite === 'Favorited') setSelectedProject(null)
+  }
+
+  async function sendMessage() {
     const message = msgRef.current.value
     if (!message) return 
     setSending(true)
@@ -92,48 +146,8 @@ const HomePage = () => {
     }, 1200);
   }
 
-  const getHeadline = project => {
-    const f = faculty[project.facultyID]
-    return f.firstname + ' ' + f.lastname + ' - ' + f.headline
-  }
 
-  const updateSelectedProject = project => {
-    if (!selectedProject || project.id !== selectedProject.id) setSelectedProject(project)
-    else setSelectedProject(null) 
-  }
-
-  async function toggleFavorite() {
-    if (liking) return
-    setLiking(true)
-
-    const favorites = student.favorites.includes(selectedProject.id)
-    ? student.favorites.filter(id => id !== selectedProject.id)
-    : [...student.favorites, selectedProject.id]
-
-    await UpdateStudent(student.id, { favorites })
-
-    setLiking(false)
-    if (favorite === 'Favorited') setSelectedProject(null)
-  }
-
-
-  function clearFilters() {
-    [setCategories, setLocation, setTeam, setPaid].forEach(func => func([]))
-  }
-
-
-  function filteredProjects() {
-    let filtered = projects
-    filtered = !search.length      ? filtered : filtered.filter(project => project.title.includes(search))
-    filtered = !location.length    ? filtered : filtered.filter(project => location.includes(project.location))
-    filtered = !paid.length        ? filtered : filtered.filter(project => paid.includes(project.paid ? 'Paid' : 'Unpaid'))
-    filtered = !team.length        ? filtered : filtered.filter(project => team.includes(project.team ? 'Team Project' : 'Individual Project'))
-    filtered = !categories.length  ? filtered : filtered.filter(project => intersection(project.categories, categories).length)
-    filtered = !fields.length      ? filtered : filtered.filter(project => intersection(project.fields, fields).length)
-    filtered = !skills.length      ? filtered : filtered.filter(project => intersection(project.required_skills, skills).length)
-    filtered = favorite === 'All'  ? filtered : filtered.filter(project => student.favorites.includes(project.id))
-    return filtered
-  }
+  
 
 
  
@@ -142,7 +156,7 @@ const HomePage = () => {
       
       <div className="opportunity-drawer">
         <div className="search">
-          <Search placeholder="Search" onChange={ e => setSearch(e.target.value) } />
+          <Input.Search placeholder="Search" onChange={ e => setSearch(e.target.value) } />
           <button className="filters" onClick={ () => setOpenFilters(true) }>
             <span>Filters</span>
             <FontAwesomeIcon icon='sliders' />
@@ -269,24 +283,16 @@ const HomePage = () => {
         }
       </div>  
 
+
+
+
       <FilterModal 
+        filters={ filters }
+        setFilters={ setFilters }
         open={ openFilters } 
-        clear={ clearFilters }
+        clearFilters={ clearFilters }
         onClose={ () => setOpenFilters(false) } 
-        onCategoryChange={ val => setCategories(val)}
-        onLocationChange={ val => setLocation(val) }
-        onTeamChange={ val => setTeam(val) }
-        onPaidChange={ val => setPaid(val) }
-        onFieldsChange={ val => setFields(val) }
-        onSkillsChange={ val => setSkills(val) }
-        onFavoriteChange={ val => setFavorite(val) }
-        categories={categories}
-        location={location}
-        team={team}
-        paid={paid}
-        fields={fields}
-        skills={skills}
-        favorite={favorite}
+        
       />
       <ApplyModal open={ openApply } project={ selectedProject } onClose={ () => setOpenApply(false) } />
     </div>
