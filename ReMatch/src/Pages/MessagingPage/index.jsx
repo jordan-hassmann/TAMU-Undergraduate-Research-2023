@@ -160,10 +160,6 @@ const MessagingPage = () => {
               </div>
 
               <div className="message-options">
-                <button className="option">
-                  <span>Attach</span>
-                  <FontAwesomeIcon icon='paperclip' size='lg' />
-                </button>
                 <button className="option" onClick={ sendMessage }>
                   <span>Send</span>
                   {
