@@ -1,0 +1,22 @@
+
+
+.admin-page {
+  height: calc(100vh - 65px - 60px);
+  overflow: auto;
+  padding: 40px 20px 20px 20px;
+
+  display: grid;
+  grid-template-columns: 0.5fr; 
+  justify-content: center;
+  gap: 40px;
+
+  .row {
+    display: grid;
+    gap: 20px; 
+
+    .fields {
+      display: grid; 
+      gap: 10px;
+    }
+  }
+}

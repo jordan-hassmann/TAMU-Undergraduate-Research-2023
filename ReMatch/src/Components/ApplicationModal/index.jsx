@@ -98,9 +98,9 @@ const ApplicationModal = ({ open, onClose, application }) => {
                   <p>Duration: </p>
                   <p>{ application.project.details.duration[0] } - { application.project.details.duration[1] }</p>
                   <p>Paid: </p>
-                  <p>{ application.project.details.Paid ? 'Paid' : 'Unpaid' }</p>
+                  <p>{ application.project.details.paid ? 'Yes' : 'No' }</p>
                   <p>Spots: </p>
-                  <p>{ application.project.details.Spots } Available Spots</p>
+                  <p>{ application.project.details.spots } Available Spots</p>
                 </div>
 
                 <p className="job-details">{ application.project.misc_details }</p>

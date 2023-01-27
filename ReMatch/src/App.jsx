@@ -13,6 +13,7 @@ import PageNotFound from './Components/PageNotFound'
 import ApplicationsPage from './Pages/ApplicationsPage'
 import MessagingPage from './Pages/MessagingPage'
 import ProfilePage from './Pages/ProfilePage'
+import AdminPage from './Pages/AdminPage'
 import { ProtectedRoute } from './Components/ProtectedRoute'
 
 // Styles
@@ -222,7 +223,7 @@ const ContentWrapper = ({ user }) => {
   return [messagesLoaded, chatsLoaded, applicationsLoaded, projectsLoaded, studentLoaded].every(loaded => loaded)
   ? (
     <>
-      <Navbar />
+      <Navbar user={ user } />
       <Outlet />
     </>
   )
@@ -258,6 +259,7 @@ function App() {
             <ContentWrapper user={ user } />
           </ProtectedRoute>
         }>
+
           <Route index element={ 
             <ProtectedRoute user={ user }>
               <HomePage />
@@ -267,6 +269,12 @@ function App() {
           <Route path='/messaging' element={
             <ProtectedRoute user={ user }>
               <MessagingPage />
+            </ProtectedRoute>
+          } />
+
+          <Route path='/admin' element={
+            <ProtectedRoute user={ user && user.uid === 'K6LkwQhw7qX0owYQRTIa6AQAbfj1' }>
+              <AdminPage />
             </ProtectedRoute>
           } />
 
@@ -281,6 +289,8 @@ function App() {
               <ProfilePage />
             </ProtectedRoute>
           } />
+
+          
 
           
 

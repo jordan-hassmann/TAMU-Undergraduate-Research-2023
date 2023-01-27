@@ -112,7 +112,6 @@ const HomePage = () => {
     await UpdateStudent(student.id, { favorites })
 
     setLiking(false)
-    if (favorite === 'Favorited') setSelectedProject(null)
   }
 
   async function sendMessage() {
@@ -269,9 +268,9 @@ const HomePage = () => {
                   <p>Duration: </p>
                   <p>{ selectedProject.details.duration[0] } - { selectedProject.details.duration[1] }</p>
                   <p>Paid: </p>
-                  <p>{ selectedProject.details.Paid ? 'Paid' : 'Unpaid' }</p>
+                  <p>{ selectedProject.details.paid ? 'Yes' : 'No' }</p>
                   <p>Spots: </p>
-                  <p>{ selectedProject.details.Spots } Available Spots</p>
+                  <p>{ selectedProject.details.spots } Available Spots</p>
                 </div>
 
                 <p className="job-details">{ selectedProject.misc_details }</p>

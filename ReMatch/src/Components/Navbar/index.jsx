@@ -30,10 +30,10 @@ const links = [
     to: '/profile', 
     value: 'Profile',
     href: 'profile'
-  },
+  }
 ]
 
-const Navbar = () => {
+const Navbar = ({ user }) => {
   const navigate = useNavigate()
   const [active, setActive] = useState(-1)
 
@@ -65,6 +65,7 @@ const Navbar = () => {
                 onClick={ () => setActive(i) }>{ link.value }</Link>
             )
           })}
+          { user.uid === 'K6LkwQhw7qX0owYQRTIa6AQAbfj1' && <Link to={ '/admin' } >Admin</Link> }
         </Space>
       </nav>
       

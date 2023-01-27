@@ -102,6 +102,7 @@ const SkillsCard = ({ student }) => {
 
   const [toDelete, setToDelete] = useState([])
   const [deleting, setDeleting] = useState(false)
+  const [skill, setSkill] = useState('')
 
 
 
@@ -118,7 +119,10 @@ const SkillsCard = ({ student }) => {
   }
 
   async function removeSkills() {
-    if (!toDelete.length) return 
+    if (!toDelete.length) {
+      setDeleting(false)
+      return 
+    } 
 
     await UpdateStudent(student.id, { skills: student.skills.filter(value => !toDelete.includes(value)) })
     .catch(err => message.error('There was an error updating your skills'))
@@ -128,11 +132,20 @@ const SkillsCard = ({ student }) => {
   }
 
   async function addSkill(e) {
+    if (e.target.value === '') return 
     const newSkill = e.target.value
     if (e.key !== 'Enter') return
     if (student.skills.includes(newSkill)) return 
-    e.target.value = ''
-    await UpdateStudent(student.id, { skills: [...student.skills, newSkill]})
+    setSkill('')
+    await UpdateStudent(student.id, { skills: [...student.skills, newSkill] })
+    .catch(err => message.error('There was an issue updating your skills'))
+  }
+
+  async function addSkillFromClick() {
+    if (skill === '') return 
+    if (student.skills.includes(skill)) return 
+    setSkill('') 
+    await UpdateStudent(student.id, { skills: [...student.skills, skill] })
     .catch(err => message.error('There was an issue updating your skills'))
   }
 
@@ -154,10 +167,12 @@ const SkillsCard = ({ student }) => {
             <input 
               placeholder='Skill'
               onKeyDown={ addSkill }
+              value={ skill }
+              onChange={ e => setSkill(e.target.value) }
               onFocus={ e => e.target.parentElement.classList.toggle('active', true) }
               onBlur={ e => e.target.parentElement.classList.toggle('active', false) } 
             />
-            <FontAwesomeIcon icon='plus' className='add-skill-icon' />
+            <FontAwesomeIcon icon='plus' className='add-skill-icon' onClick={addSkillFromClick} />
           </div>
         }
       </div>
