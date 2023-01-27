@@ -1,8 +1,9 @@
 
 import { useState } from 'react'
-import { Input, Button } from 'antd'
+import { Input, Button, Select } from 'antd'
 import { CreateProject } from '../../API/Projects'
 import { CreateStudent } from '../../API/Profile'
+import { UpdateApplicationStatus } from '../../API/Applications'
 
 import './styles.scss'
 
@@ -13,6 +14,10 @@ const AdminPage = () => {
 
   const [project, setProject] = useState({})
   const [user, setUser] = useState({})
+  const [application, setApplication] = useState({
+    id: '', 
+    status: 'In Review', 
+  })
 
 
   async function addProject() {
@@ -39,6 +44,16 @@ const AdminPage = () => {
     await CreateStudent(user) 
     setUser({})
   }
+
+  async function updateApplicationStatus() {
+    if (application.id === '') return 
+    await UpdateApplicationStatus(application.id, application.status)
+    setApplication({ id: '', status: 'In Review' })
+  }
+
+
+
+
 
   const sections = [
     {
@@ -80,6 +95,23 @@ const AdminPage = () => {
     <div className='admin-page'>
 
       <h1>Admin Page</h1>
+
+
+
+      <div className="row">
+        <h2>Change Application Status</h2>
+        <div className="application-selection">
+          <Input placeholder='Application ID' value={ application.id } onChange={ e => setApplication({ ...application, id: e.target.value })} />
+          <Select value={ application.status } onChange={ val => setApplication({ ...application, status: val })} options={[
+            { value: 'In Review' },
+            { value: 'Accepted' },
+            { value: 'Rejected' },
+          ]} />
+          <Button type='primary' onClick={updateApplicationStatus}>Update</Button>
+        </div>
+      </div>
+
+
 
       { sections.map(({title, fields, onSubmit, onChange}) => (
         <div className="row" key={title}>

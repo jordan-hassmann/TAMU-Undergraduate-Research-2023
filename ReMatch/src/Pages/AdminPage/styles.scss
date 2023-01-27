@@ -19,4 +19,10 @@
       gap: 10px;
     }
   }
+
+  .application-selection {
+    display: grid;
+    grid-template-columns: 1fr 1fr min-content;
+    gap: 20px;
+  }
 }

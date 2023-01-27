@@ -1,6 +1,6 @@
 
 
-import { addDoc, collection, deleteDoc, doc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { db, storage } from '../firebase'
 import { getDownloadURL, ref, uploadBytes, deleteObject } from "firebase/storage";
 
@@ -19,6 +19,9 @@ export const SumbitApplication = async (application, resume) => {
   return await addDoc(collection(db, 'Applications'), application)
 }
 
+export const UpdateApplicationStatus = async (id, status) => {
+  return await updateDoc(doc(db, 'Applications', id), { status })
+}
 
 
 

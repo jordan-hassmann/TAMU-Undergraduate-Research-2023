@@ -168,7 +168,6 @@ const ContentWrapper = ({ user }) => {
 
         dispatch(addChats(added))
         dispatch(removeChats(removed))
-
       })
 
 
