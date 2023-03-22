@@ -1,6 +1,6 @@
 
 
-import { addDoc, doc, setDoc, updateDoc } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc, updateDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from '../firebase'
 
@@ -22,4 +22,8 @@ export const CreateStudent = async student => {
     duration: [null, null],
     skills: []
   })
+}
+
+export const CreateFaculty = async faculty => {
+  return await setDoc(doc(db, 'Faculty', faculty.name), faculty)
 }

@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { Input, Button, Select } from 'antd'
 import { CreateProject } from '../../API/Projects'
-import { CreateStudent } from '../../API/Profile'
+import { CreateStudent, CreateFaculty } from '../../API/Profile'
 import { UpdateApplicationStatus } from '../../API/Applications'
 
 import './styles.scss'
@@ -14,6 +14,7 @@ const AdminPage = () => {
 
   const [project, setProject] = useState({})
   const [user, setUser] = useState({})
+  const [faculty, setFaculty] = useState({})
   const [application, setApplication] = useState({
     id: '', 
     status: 'In Review', 
@@ -45,6 +46,11 @@ const AdminPage = () => {
     setUser({})
   }
 
+  async function addFaculty() {
+    await CreateFaculty(faculty)
+    setFaculty({})
+  }
+
   async function updateApplicationStatus() {
     if (application.id === '') return 
     await UpdateApplicationStatus(application.id, application.status)
@@ -64,6 +70,16 @@ const AdminPage = () => {
       },
       onChange: (label, e) => {
         setUser({ ...user, [label]: e.target.value })
+      }
+    },
+    {
+      title: 'Create Faculty', 
+      fields: [ 'name', 'headline' ],
+      onSubmit: () => {
+        addFaculty()
+      },
+      onChange: (label, e) => {
+        setFaculty({ ...faculty, [label]: e.target.value })
       }
     },
     {

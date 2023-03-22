@@ -90,7 +90,7 @@ const HomePage = () => {
     const { categories, location, team, paid, fields, skills, favorite } = filters
     let filtered = projects
 
-    filtered = !search.length      ? filtered : filtered.filter(project => project.title.includes(search))
+    filtered = !search.length      ? filtered : filtered.filter(project => project.title.toLowerCase().includes(search.toLowerCase()))
     filtered = !location.length    ? filtered : filtered.filter(project => location.includes(project.location))
     filtered = !paid.length        ? filtered : filtered.filter(project => paid.includes(project.paid ? 'Paid' : 'Unpaid'))
     filtered = !team.length        ? filtered : filtered.filter(project => team.includes(project.team ? 'Team Project' : 'Individual Project'))
@@ -202,7 +202,7 @@ const HomePage = () => {
 
                 <Popover 
                 placement='bottomLeft' 
-                title={`Send ${faculty[selectedProject.facultyID].firstname} a message`}
+                title={`Send ${faculty[selectedProject.facultyID].name} a message`}
                 trigger='click'
                 open={ messenger }
                 content={
